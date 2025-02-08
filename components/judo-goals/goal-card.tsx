@@ -27,7 +27,7 @@ export function GoalCard(props: GoalCardProps) {
 				initialDescription={props.description}
 			/>
 			<Card
-				className="max-w-[400px] min-w-[400px] m-10"
+				className="max-w-[400px] min-w-[400px] m-10 hover:opacity-85"
 				isPressable
 				onPress={onOpen}
 			>

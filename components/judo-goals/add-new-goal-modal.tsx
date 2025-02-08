@@ -18,7 +18,9 @@ export default function AddNewGoalModal() {
 
 	return (
 		<>
-			<Button onPress={onOpen}>Create a new goal</Button>
+			<Button onPress={onOpen} color="primary">
+				Create a new goal
+			</Button>
 			{isOpen && (
 				<GoalModal
 					isOpen={isOpen}
