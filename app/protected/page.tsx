@@ -1,4 +1,3 @@
-import Goals from "@/components/judo-goals/goals";
 import { GoalsPage } from "@/components/judo-goals/goals-page";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";

@@ -24,6 +24,7 @@ interface GoalModalProps extends OpeningModalProps {
 	onDelete?: () => Promise<any>;
 	initialName?: string;
 	initialDescription?: string;
+	submitButtonText?: string;
 }
 
 export function GoalModal({
@@ -35,6 +36,7 @@ export function GoalModal({
 	initialName,
 	isDeleteButtonShown,
 	onDelete,
+	submitButtonText,
 }: GoalModalProps) {
 	const [name, setName] = useState(initialName ?? "");
 	const [description, setDescription] = useState(initialDescription ?? "");
@@ -124,7 +126,7 @@ export function GoalModal({
 									disabled={isButtonDisabled}
 									isDisabled={isButtonDisabled}
 								>
-									Create
+									{submitButtonText ?? "Create"}
 								</Button>
 							</div>
 						</ModalFooter>

@@ -30,6 +30,7 @@ export default function EditNewGoalModal({
 			<GoalModal
 				isOpen={isOpen}
 				onOpenChange={onOpenChange}
+				submitButtonText="Save"
 				title="Edit Goal"
 				onSubmit={onSubmit}
 				initialName={initialName}
