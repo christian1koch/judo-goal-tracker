@@ -1,21 +1,10 @@
-import { GoalsPage } from "@/components/judo-goals/goals-page";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { Link } from "@heroui/react";
 
 export default async function ProtectedPage() {
-	const supabase = await createClient();
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-
-	if (!user) {
-		return redirect("/sign-in");
-	}
-
 	return (
-		<div className="w-full">
-			<GoalsPage />
+		<div className="w-full flex flex-col gap-2 p-10">
+			<Link href="/protected/goals">Goals</Link>
+			<Link href="/protected/notes">Notes</Link>
 		</div>
 	);
 }

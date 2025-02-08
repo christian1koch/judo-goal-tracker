@@ -7,6 +7,17 @@ import { redirect } from "next/navigation";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 
+const getURL = () => {
+	let url =
+		process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+		process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+		"http://localhost:3000/";
+	// Make sure to include `https://` when not localhost.
+	url = url.startsWith("http") ? url : `https://${url}`;
+	// Make sure to include a trailing `/`.
+	url = url.endsWith("/") ? url : `${url}/`;
+	return url;
+};
 export const signUpAction = async (formData: FormData) => {
 	const email = formData.get("email")?.toString();
 	const password = formData.get("password")?.toString();
@@ -25,7 +36,7 @@ export const signUpAction = async (formData: FormData) => {
 		email,
 		password,
 		options: {
-			emailRedirectTo: `${origin}/auth/callback`,
+			emailRedirectTo: `${getURL()}/auth/callback`,
 		},
 	});
 
@@ -54,8 +65,12 @@ export const signInAction = async (formData: FormData) => {
 	if (error) {
 		return encodedRedirect("error", "/sign-in", error.message);
 	}
-
-	return redirect("/protected");
+	/**
+	 * Might need to be redirected to /dashboard
+	 * when we have a dashboard...
+	 * and by we I mean I
+	 */
+	return redirect("/goals");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
