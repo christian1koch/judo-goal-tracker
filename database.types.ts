@@ -9,6 +9,104 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      diary_answers: {
+        Row: {
+          created_at: string
+          goal_id: number | null
+          id: number
+          note_id: number | null
+          question_id: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          goal_id?: number | null
+          id?: number
+          note_id?: number | null
+          question_id?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          goal_id?: number | null
+          id?: number
+          note_id?: number | null
+          question_id?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diary_answers_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "diary_answers_note_id_fkey"
+            columns: ["note_id"]
+            isOneToOne: false
+            referencedRelation: "diary_notes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "diary_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "diary_questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "diary_answers_question_id_fkey1"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "diary_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diary_notes: {
+        Row: {
+          created_at: string
+          general_notes: string | null
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          general_notes?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          general_notes?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      diary_questions: {
+        Row: {
+          created_at: string
+          id: number
+          text: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          text?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          text?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       goals: {
         Row: {
           created_at: string

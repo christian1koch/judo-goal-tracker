@@ -212,3 +212,19 @@ export const deleteGoal = async (id: number) => {
 	}
 	revalidatePath("/protected");
 };
+
+/**
+ * Questions
+ */
+
+export const getGoals = async () => {
+	const supabase = await createClient();
+	const { data: goals } = await supabase.from("goals").select();
+	return goals;
+};
+
+export const getQuestions = async () => {
+	const supabase = await createClient();
+	const { data: questions } = await supabase.from("diary_questions").select();
+	return questions;
+};
