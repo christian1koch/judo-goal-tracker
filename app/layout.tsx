@@ -5,7 +5,7 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { HeroUIProvider } from "@heroui/react";
+import { Button, HeroUIProvider, Link } from "@heroui/react";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
@@ -60,17 +60,7 @@ export default function RootLayout({
 								</div>
 
 								<footer className="w-full bottom-0 fixed flex items-center justify-center border-t mx-auto text-center text-xs gap-8">
-									<p>
-										Powered by{" "}
-										<a
-											href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-											target="_blank"
-											className="font-bold hover:underline"
-											rel="noreferrer"
-										>
-											Supabase
-										</a>
-									</p>
+									<p>Christian Koch Echeverria</p>
 								</footer>
 							</div>
 						</main>
