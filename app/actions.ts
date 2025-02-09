@@ -71,7 +71,7 @@ export const signInAction = async (formData: FormData) => {
 	 * when we have a dashboard...
 	 * and by we I mean I
 	 */
-	return redirect("/goals");
+	return redirect("/protected");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
