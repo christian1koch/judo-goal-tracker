@@ -16,6 +16,7 @@ export type Database = {
           id: number
           note_id: number | null
           question_id: number | null
+          text: string | null
           user_id: string | null
         }
         Insert: {
@@ -24,6 +25,7 @@ export type Database = {
           id?: number
           note_id?: number | null
           question_id?: number | null
+          text?: string | null
           user_id?: string | null
         }
         Update: {
@@ -32,6 +34,7 @@ export type Database = {
           id?: number
           note_id?: number | null
           question_id?: number | null
+          text?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -68,18 +71,21 @@ export type Database = {
       diary_notes: {
         Row: {
           created_at: string
+          date: string | null
           general_notes: string | null
           id: number
           user_id: string | null
         }
         Insert: {
           created_at?: string
+          date?: string | null
           general_notes?: string | null
           id?: number
           user_id?: string | null
         }
         Update: {
           created_at?: string
+          date?: string | null
           general_notes?: string | null
           id?: number
           user_id?: string | null
