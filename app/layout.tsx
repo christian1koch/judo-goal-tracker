@@ -5,7 +5,7 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { Button, HeroUIProvider, Link } from "@heroui/react";
+import { HeroUIProvider } from "@heroui/react";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
