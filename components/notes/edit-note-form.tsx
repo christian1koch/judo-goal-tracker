@@ -35,11 +35,15 @@ export function EditNoteForm({
 	const [generalNotes, setGeneralNotes] = useState("");
 
 	const onGoalAnswerChange = (newText: string, goalId: number) => {
+		console.log(answers);
 		const currentAnswer = goalAnswers.find(
 			(answer) => answer.goal_id === goalId
 		);
+		console.log("goalId", goalId);
+		console.log("currentAnswer", currentAnswer);
 		const strippedAnswers = goalAnswers.filter((a) => a.goal_id !== goalId);
 		if (currentAnswer) {
+			console.log("current Answer", currentAnswer);
 			const newAnswer: IDiaryAnswer = { ...currentAnswer, text: newText };
 			setGoalAnswers([...strippedAnswers, newAnswer]);
 		}
@@ -62,7 +66,7 @@ export function EditNoteForm({
 		return goalAnswers.find((a) => a.goal_id === goalId);
 	};
 	const getQuestionAnswer = (questionId: number) => {
-		return goalAnswers.find((a) => a.question_id === questionId);
+		return questionAnswers.find((a) => a.question_id === questionId);
 	};
 
 	return (

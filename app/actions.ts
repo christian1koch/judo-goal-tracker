@@ -228,3 +228,94 @@ export const getQuestions = async () => {
 	const { data: questions } = await supabase.from("diary_questions").select();
 	return questions;
 };
+export const getAnswersByNoteId = async (noteId: number) => {
+	const supabase = await createClient();
+	const { data: answers } = await supabase
+		.from("diary_answers")
+		.select()
+		.eq("note_id", noteId);
+	return answers;
+};
+
+export const getNoteById = async (noteId: number) => {
+	const supabase = await createClient();
+	const userId = await getUserFromSession(supabase);
+
+	const { data: note, error } = await supabase
+		.from("diary_notes")
+		.select()
+		.eq("id", noteId)
+		.eq("user_id", userId)
+		.single();
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};
+
+export const createNote = async (title: string, generalNotes: string) => {
+	const supabase = await createClient();
+	const userId = await getUserFromSession(supabase);
+
+	// Crear la nota en diary_notes
+	const { data: noteData, error: noteError } = await supabase
+		.from("diary_notes")
+		.insert({
+			user_id: userId,
+			title,
+			general_notes: generalNotes,
+			date: new Date().toISOString(),
+		})
+		.select()
+		.single();
+
+	if (noteError) {
+		throw new Error(noteError.message);
+	}
+
+	const noteId = noteData.id;
+
+	// Obtener todas las preguntas y metas del usuario
+	const { data: questions, error: questionError } = await supabase
+		.from("diary_questions")
+		.select();
+
+	const { data: goals, error: goalError } = await supabase
+		.from("goals")
+		.select()
+		.eq("user_id", userId);
+
+	if (questionError || goalError) {
+		throw new Error(questionError?.message || goalError?.message);
+	}
+
+	// Crear respuestas asociadas a la nota
+	const answers = [
+		...questions.map((q) => ({
+			user_id: userId,
+			note_id: noteId,
+			question_id: q.id,
+			text: "",
+		})),
+		...goals.map((g) => ({
+			user_id: userId,
+			note_id: noteId,
+			goal_id: g.id,
+			text: "",
+		})),
+	];
+
+	if (answers.length > 0) {
+		const { error: answerError } = await supabase
+			.from("diary_answers")
+			.insert(answers);
+		if (answerError) {
+			throw new Error(answerError.message);
+		}
+	}
+
+	revalidatePath("/protected");
+	return noteData;
+};
