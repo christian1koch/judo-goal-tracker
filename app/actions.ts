@@ -255,6 +255,17 @@ export const getNoteById = async (noteId: number) => {
 	return note;
 };
 
+export const getALlNotes = async () => {
+	const supabase = await createClient();
+
+	const { data: note, error } = await supabase.from("diary_notes").select();
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};
+
 export const createNote = async (title: string, generalNotes: string) => {
 	const supabase = await createClient();
 	const userId = await getUserFromSession(supabase);
