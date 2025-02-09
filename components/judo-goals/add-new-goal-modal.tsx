@@ -18,14 +18,14 @@ export default function AddNewGoalModal() {
 
 	return (
 		<>
-			<Button onPress={onOpen} color="primary">
+			<Button onPress={onOpen} variant="solid" color="primary">
 				Create a new goal
 			</Button>
 			{isOpen && (
 				<GoalModal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
-					title="Create A new Goal"
+					title="Create a new Goal"
 					onSubmit={onSubmit}
 				/>
 			)}

@@ -117,11 +117,11 @@ export function GoalModal({
 								<div />
 							)}
 							<div className="flex flex-row gap-2">
-								<Button color="secondary" onPress={onClose}>
+								<Button color="default" onPress={onClose}>
 									Close
 								</Button>
 								<Button
-									color="success"
+									color="primary"
 									onPress={() => onCreate(onClose)}
 									disabled={isButtonDisabled}
 									isDisabled={isButtonDisabled}
