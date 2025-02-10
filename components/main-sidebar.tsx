@@ -36,9 +36,9 @@ export function MainSidebar() {
 	];
 	const [open, setOpen] = useState(false);
 	return (
-		<div className="relative">
+		<div className="relative h-[calc(100vh-64px)] z-40">
 			<Sidebar open={open} setOpen={setOpen} animate={true}>
-				<SidebarBody className="justify-between gap-10 fixed self-start border-r border-default-300 h-[calc(100vh-64px)]">
+				<SidebarBody>
 					<div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
 						<>
 							<Logo />

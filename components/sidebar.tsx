@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
 			<motion.div
 				className={cn(
 					"h-full px-4 py-4 hidden  md:flex md:flex-col bg-background w-[300px] flex-shrink-0",
-					className
+					"justify-between gap-10 fixed self-start border-r border-default-300"
 				)}
 				animate={{
 					width: animate ? (open ? "200px" : "60px") : "200px",
@@ -115,11 +115,11 @@ export const MobileSidebar = ({
 		<>
 			<div
 				className={cn(
-					"h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-background w-full"
+					"h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-background w-full fixed"
 				)}
 				{...props}
 			>
-				<div className="flex justify-end z-20 w-full">
+				<div className="flex justify-start z-20 w-full">
 					<IconMenu2
 						className="text-neutral-800 dark:text-neutral-200"
 						onClick={() => setOpen(!open)}
@@ -136,12 +136,12 @@ export const MobileSidebar = ({
 								ease: "easeInOut",
 							}}
 							className={cn(
-								"fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
+								"fixed h-auto w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between top-16",
 								className
 							)}
 						>
 							<div
-								className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+								className="absolute right-10 top-10 z-50"
 								onClick={() => setOpen(!open)}
 							>
 								<IconX />

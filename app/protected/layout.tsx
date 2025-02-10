@@ -9,8 +9,9 @@ export default async function ProtectedLayout({
 	return (
 		<div className="flex">
 			<MainSidebar />
-			<Spacer x={16} />
-			{children}
+			<div className="flex justify-center flex-1 md:pl-10">
+				{children}
+			</div>
 		</div>
 	);
 }

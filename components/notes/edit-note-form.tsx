@@ -33,9 +33,10 @@ export function EditNoteForm({
 	const [questionAnswers, setQuestionAnswers] = useState<IDiaryAnswer[]>(
 		initialQuestionAnswers
 	);
-
+	// TODO: Add title saving logic
 	const [title, setTitle] = useState(note?.title || "");
 	const [generalNotes, setGeneralNotes] = useState("");
+	// TODO: Add date logic
 	const [date, setDate] = useState(parseDate(note.date!));
 
 	const onGoalAnswerChange = (newText: string, goalId: number) => {
@@ -48,19 +49,6 @@ export function EditNoteForm({
 			console.log("current Answer", currentAnswer);
 			const newAnswer: IDiaryAnswer = { ...currentAnswer, text: newText };
 			setGoalAnswers([...strippedAnswers, newAnswer]);
-		}
-	};
-
-	const onQuestionAnswerChange = (newText: string, questionId: number) => {
-		const currentAnswer = questionAnswers.find(
-			(answer) => answer.question_id === questionId
-		);
-		const strippedAnswers = questionAnswers.filter(
-			(a) => a.question_id !== questionId
-		);
-		if (currentAnswer) {
-			const newAnswer: IDiaryAnswer = { ...currentAnswer, text: newText };
-			setQuestionAnswers([...strippedAnswers, newAnswer]);
 		}
 	};
 
