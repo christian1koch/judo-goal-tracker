@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
+import { IDiaryAnswer } from "@/types";
 
 const getURL = () => {
 	let url =
@@ -329,4 +330,21 @@ export const createNote = async (title: string, generalNotes: string) => {
 
 	revalidatePath("/protected");
 	return noteData;
+};
+
+export const updateAnswer = async (
+	answer: Partial<IDiaryAnswer> & { id: number }
+) => {
+	const supabase = await createClient();
+
+	const { data, error } = await supabase
+		.from("diary_answers")
+		.update({ ...answer })
+		.eq("id", answer.id)
+		.select()
+		.single();
+	if (error) {
+		throw new Error(error.message);
+	}
+	return data;
 };

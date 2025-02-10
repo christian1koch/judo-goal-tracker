@@ -43,8 +43,8 @@ export default function RootLayout({
 					>
 						<main className="min-h-screen h-screen flex flex-col items-center antialiased">
 							<div className="flex-1 w-full flex flex-col items-center h-full">
-								<nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-									<div className="w-full max-w-5xl flex justify-end items-center p-3 px-5 text-sm">
+								<nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 fixed top-0 z-20">
+									<div className="w-full max-w-5xl flex justify-end items-center p-3 px-5 text-sm h-16 bg-background">
 										{!hasEnvVars ? (
 											<EnvVarWarning />
 										) : (
@@ -55,11 +55,11 @@ export default function RootLayout({
 										)}
 									</div>
 								</nav>
-								<div className="w-full flex-1 h-full">
+								<div className="w-full flex-1 h-full mt-16">
 									{children}
 								</div>
 
-								<footer className="w-full bottom-0 fixed flex items-center justify-center border-t mx-auto text-center text-xs gap-8">
+								<footer className="w-full bottom-0 fixed flex items-center justify-center border-t mx-auto text-center text-xs gap-8 bg-background">
 									<p>Christian Koch Echeverria</p>
 								</footer>
 							</div>
