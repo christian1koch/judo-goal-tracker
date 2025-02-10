@@ -1,8 +1,10 @@
 import { createNote, getALlNotes } from "@/app/actions";
 import { BentoGrid, BentoGridItem } from "@/components/bento-grid";
 import { MainSidebar } from "@/components/main-sidebar";
+import { CreateNewNoteButton } from "@/components/notes/create-new-note-button";
 import { cn } from "@/lib/utils";
-import { Button, Link } from "@heroui/react";
+import { Button } from "@heroui/react";
+import Link from "next/link";
 
 export default async function Page() {
 	// const createNewNote = async () => {
@@ -33,6 +35,7 @@ export default async function Page() {
 					/>
 				))}
 			</BentoGrid>
+			<CreateNewNoteButton />
 		</div>
 	);
 }
