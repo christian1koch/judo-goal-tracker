@@ -11,7 +11,12 @@ export function CreateNewNoteButton() {
 		router.push(`/protected/notes/${newNote.id}`);
 	};
 	return (
-		<Button color="primary" variant="light" onPress={onCreateNote}>
+		<Button
+			className="flex-grow-0"
+			color="primary"
+			variant="light"
+			onPress={onCreateNote}
+		>
 			Create New Note
 		</Button>
 	);
