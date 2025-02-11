@@ -1,8 +1,8 @@
 "use client";
-import { updateAnswer } from "@/app/actions";
+import { updateAnswer, updateNote } from "@/app/actions";
 import { IDiaryAnswer, IDiaryNote, IDiaryQuestion, IGoal } from "@/types";
 import { DatePicker, Divider, Input, Textarea } from "@heroui/react";
-import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import { parseDate } from "@internationalized/date";
 import { ChangeEvent, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -22,34 +22,17 @@ export function EditNoteForm({
 	answers,
 	note,
 }: EditNodeFormProps) {
-	const initialGoalAnswers = answers.filter(
-		(answer) => answer.goal_id != null
-	);
-	const initialQuestionAnswers = answers.filter(
+	const goalAnswers = answers.filter((answer) => answer.goal_id != null);
+	const questionAnswers = answers.filter(
 		(answer) => answer.question_id != null
 	);
-	const [goalAnswers, setGoalAnswers] =
-		useState<IDiaryAnswer[]>(initialGoalAnswers);
-	const [questionAnswers, setQuestionAnswers] = useState<IDiaryAnswer[]>(
-		initialQuestionAnswers
-	);
-	// TODO: Add title saving logic
-	const [title, setTitle] = useState(note?.title || "");
-	const [generalNotes, setGeneralNotes] = useState("");
-	// TODO: Add date logic
-	const [date, setDate] = useState(parseDate(note.date!));
 
-	const onGoalAnswerChange = (newText: string, goalId: number) => {
-		console.log(answers);
-		const currentAnswer = goalAnswers.find(
-			(answer) => answer.goal_id === goalId
-		);
-		const strippedAnswers = goalAnswers.filter((a) => a.goal_id !== goalId);
-		if (currentAnswer) {
-			console.log("current Answer", currentAnswer);
-			const newAnswer: IDiaryAnswer = { ...currentAnswer, text: newText };
-			setGoalAnswers([...strippedAnswers, newAnswer]);
-		}
+	const updateTitleDebounced = useDebouncedCallback(async (value: string) => {
+		await updateNote({ ...note, title: value });
+	}, 1000);
+
+	const updateDate = async (date: string) => {
+		await updateNote({ ...note, date });
 	};
 
 	const getGoalAnswer = (goalId: number) => {
@@ -57,6 +40,17 @@ export function EditNoteForm({
 	};
 	const getQuestionAnswer = (questionId: number) => {
 		return questionAnswers.find((a) => a.question_id === questionId);
+	};
+
+	const updateNoteText = async (text: string) => {
+		return await updateNote({ ...note, general_notes: text });
+	};
+
+	const updateAnswerText = async (text: string, answer?: IDiaryAnswer) => {
+		if (!answer) {
+			return;
+		}
+		return await updateAnswer({ ...answer, text: text });
 	};
 
 	return (
@@ -69,15 +63,20 @@ export function EditNoteForm({
 					<Input
 						label="Title"
 						variant="underlined"
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
+						defaultValue={note.title ?? ""}
+						onChange={(e) => updateTitleDebounced(e.target.value)}
 					/>
 				</div>
 				<div>
 					<DatePicker
 						label="Date"
 						variant="underlined"
-						value={date}
+						defaultValue={parseDate(note.date!)}
+						onChange={(e) => {
+							if (e) {
+								updateDate(e.toString());
+							}
+						}}
 					/>
 				</div>
 			</div>
@@ -91,7 +90,10 @@ export function EditNoteForm({
 						<QuestionSection
 							key={goal.id}
 							questionText={getGoalText(goal.title)}
-							answer={getGoalAnswer(goal.id)}
+							defaultText={getGoalAnswer(goal.id)?.text ?? ""}
+							updateFn={(text) =>
+								updateAnswerText(text, getGoalAnswer(goal.id))
+							}
 						/>
 					))}
 				</section>
@@ -104,19 +106,25 @@ export function EditNoteForm({
 						<QuestionSection
 							key={question.id}
 							questionText={question.text || ""}
-							answer={getQuestionAnswer(question.id)}
+							defaultText={
+								getQuestionAnswer(question.id)?.text ?? ""
+							}
+							updateFn={(text) =>
+								updateAnswerText(
+									text,
+									getQuestionAnswer(question.id)
+								)
+							}
 						/>
 					))}
 				</section>
 				<section className="flex flex-col gap-10">
 					<div>
 						<h2 className="text-2xl">General Notes</h2>
-						<Divider className="my-2" />
-						<Textarea
-							placeholder="Write more information"
-							minRows={10}
-							value={generalNotes}
-							onChange={(e) => setGeneralNotes(e.target.value)}
+						<QuestionSection
+							label="Write more information"
+							updateFn={updateNoteText}
+							defaultText={note.general_notes ?? ""}
 						/>
 					</div>
 				</section>
@@ -126,24 +134,57 @@ export function EditNoteForm({
 }
 
 interface QuestionSectionProps {
-	questionText: string;
-	answer?: IDiaryAnswer;
+	questionText?: string;
+	defaultText?: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	updateFn: (value: string) => Promise<any>;
+	minRows?: number;
+	label?: string;
 }
 
-function QuestionSection({ questionText, answer }: QuestionSectionProps) {
-	const [isSaving, setIsSaving] = useState(false);
-	const [saved, setSaved] = useState(false);
+function QuestionSection({
+	questionText,
+	defaultText,
+	updateFn,
+	minRows,
+	label,
+}: QuestionSectionProps) {
+	const { setIsSaving, setSaved, getDescriptionText } =
+		useDescriptionSaveIndicator();
 
 	const updateAnswerDebounced = useDebouncedCallback(
 		async (value: string) => {
-			if (!answer) return null;
-			// TODO: Add try catch
-			await updateAnswer({ ...answer, text: value });
+			await updateFn(value);
 			setIsSaving(false);
 			setSaved(true);
 		},
 		1000
 	);
+
+	const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setSaved(false);
+		setIsSaving(true);
+		updateAnswerDebounced(e.target.value);
+	};
+
+	return (
+		<div className="">
+			{questionText && <p className="pb-2">{questionText}</p>}
+			<Textarea
+				label={label ? label : "Answer"}
+				// onChange={(e) => onTextChange(e.target.value)}
+				defaultValue={defaultText ?? undefined}
+				onChange={handleAnswerChange}
+				description={getDescriptionText()}
+				minRows={minRows}
+			/>
+		</div>
+	);
+}
+
+function useDescriptionSaveIndicator() {
+	const [isSaving, setIsSaving] = useState(false);
+	const [saved, setSaved] = useState(false);
 
 	const getDescriptionText = () => {
 		if (isSaving) {
@@ -155,25 +196,5 @@ function QuestionSection({ questionText, answer }: QuestionSectionProps) {
 		return null;
 	};
 
-	const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setSaved(false);
-		setIsSaving(true);
-		updateAnswerDebounced(e.target.value);
-	};
-
-	if (!answer) {
-		return null;
-	}
-	return (
-		<div className="">
-			<p className="pb-2">{questionText}</p>
-			<Textarea
-				label="Answer"
-				// onChange={(e) => onTextChange(e.target.value)}
-				defaultValue={answer.text ?? undefined}
-				onChange={handleAnswerChange}
-				description={getDescriptionText()}
-			/>
-		</div>
-	);
+	return { setIsSaving, setSaved, getDescriptionText } as const;
 }
