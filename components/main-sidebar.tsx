@@ -10,6 +10,8 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import JudoIcon from "../public/img/JudoIcon.svg";
 
 export function MainSidebar() {
 	const links = [
@@ -69,7 +71,7 @@ export const Logo = () => {
 			href="#"
 			className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
 		>
-			<div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+			<LogoIcon />;
 			<motion.span
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -82,11 +84,12 @@ export const Logo = () => {
 };
 export const LogoIcon = () => {
 	return (
-		<Link
-			href="#"
-			className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
-		>
-			<div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-		</Link>
+		<Image
+			priority
+			src={JudoIcon}
+			alt="our judo icon"
+			height={30}
+			width={30}
+		/>
 	);
 };

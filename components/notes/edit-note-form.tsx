@@ -55,9 +55,6 @@ export function EditNoteForm({
 
 	return (
 		<div className="flex flex-col justify-center max-w-4xl m-auto border rounded-lg border-default-300 my-5 p-10">
-			<div className="flex flex-row justify-center">
-				<h1 className="text-4xl">Edit Note</h1>
-			</div>
 			<div className="flex flex-row w-full justify-between py-2 mb-10">
 				<div>
 					<Input

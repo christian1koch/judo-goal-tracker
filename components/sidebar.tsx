@@ -93,7 +93,7 @@ export const DesktopSidebar = ({
 					"justify-between gap-10 fixed self-start border-r border-default-300"
 				)}
 				animate={{
-					width: animate ? (open ? "200px" : "60px") : "200px",
+					width: animate ? (open ? "200px" : "64px") : "200px",
 				}}
 				onMouseEnter={() => setOpen(true)}
 				onMouseLeave={() => setOpen(false)}
@@ -115,7 +115,7 @@ export const MobileSidebar = ({
 		<>
 			<div
 				className={cn(
-					"h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-background w-full fixed"
+					"h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-background fixed top-3"
 				)}
 				{...props}
 			>
