@@ -119,7 +119,10 @@ export const MobileSidebar = ({
 				)}
 				{...props}
 			>
-				<div className="flex justify-start z-20 w-full">
+				<div
+					className="flex justify-start
+				 z-20 w-full"
+				>
 					<IconMenu2
 						className="text-neutral-800 dark:text-neutral-200"
 						onClick={() => setOpen(!open)}
@@ -164,7 +167,7 @@ export const SidebarLink = ({
 	className?: string;
 	props?: LinkProps;
 }) => {
-	const { open, animate } = useSidebar();
+	const { open, setOpen, animate } = useSidebar();
 	return (
 		<Link
 			href={link.href}
@@ -172,6 +175,7 @@ export const SidebarLink = ({
 				"flex items-center justify-start gap-2  group/sidebar py-2",
 				className
 			)}
+			onClick={() => setOpen(!open)}
 			{...props}
 		>
 			{link.icon}

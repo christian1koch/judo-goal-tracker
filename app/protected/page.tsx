@@ -1,4 +1,4 @@
-import { Link } from "@heroui/react";
+import Link from "next/link";
 
 export default async function ProtectedPage() {
 	return (
