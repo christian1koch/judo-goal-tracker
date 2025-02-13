@@ -1,7 +1,9 @@
 import { getALlNotes } from "@/app/actions";
-import { BentoGrid, BentoGridItem } from "@/components/bento-grid";
+import { BentoGridItem } from "@/components/bento-grid";
+import { NotesBentoGrid } from "@/components/notes/components/notes-bento-grid";
 import { CreateNewNoteButton } from "@/components/notes/create-new-note-button";
 import { cn } from "@/lib/utils";
+// import { Icon12Hours } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default async function Page() {
@@ -20,7 +22,7 @@ export default async function Page() {
 			{!notes || notes.length === 0 ? (
 				<div>No Notes found, Create a new note to start</div>
 			) : (
-				<BentoGrid className="p-10 w-full flex-1">
+				<NotesBentoGrid>
 					{notes.map((n) => (
 						<BentoGridItem
 							key={n.id}
@@ -31,7 +33,7 @@ export default async function Page() {
 							description={n.date}
 						/>
 					))}
-				</BentoGrid>
+				</NotesBentoGrid>
 			)}
 		</div>
 	);
