@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 import { GoalCard } from "./goal-card";
+import { GoalsContainer } from "./goals-container.tsx/goals-container";
 
 export default async function Goals() {
 	const supabase = await createClient();
@@ -9,7 +10,7 @@ export default async function Goals() {
 		return <div>No goals to show</div>;
 	}
 	return (
-		<div className="flex flex-row flex-wrap justify-around">
+		<GoalsContainer>
 			{goals.map((goal) => (
 				<GoalCard
 					id={goal.id}
@@ -19,6 +20,6 @@ export default async function Goals() {
 					rank={goal.rank}
 				/>
 			))}
-		</div>
+		</GoalsContainer>
 	);
 }
