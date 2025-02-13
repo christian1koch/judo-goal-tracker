@@ -12,10 +12,16 @@ export function NotesTimelineButtonGroup() {
 	const isGridView = !isTimeline;
 	return (
 		<ButtonGroup>
-			<Button as={Link} href="/protected/notes" isDisabled={isGridView}>
+			<Button
+				prefetch
+				as={Link}
+				href="/protected/notes"
+				isDisabled={isGridView}
+			>
 				Grid View
 			</Button>
 			<Button
+				prefetch
 				as={Link}
 				href="/protected/notes/timeline"
 				isDisabled={isTimeline}
