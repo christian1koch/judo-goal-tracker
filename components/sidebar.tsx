@@ -177,6 +177,7 @@ export const SidebarLink = ({
 			)}
 			onClick={() => setOpen(!open)}
 			{...props}
+			scroll={false}
 		>
 			{link.icon}
 
