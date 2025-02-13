@@ -1,5 +1,5 @@
 import { NotesTimeline } from "@/components/notes/notes-timeline";
 
-export default function PlaygroundPage() {
+export default function NotesTimelinePage() {
 	return <NotesTimeline />;
 }

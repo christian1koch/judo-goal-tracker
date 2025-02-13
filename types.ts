@@ -11,3 +11,19 @@ export type IDiaryNote = Database["public"]["Tables"]["diary_notes"]["Row"];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PartialWithId<T> = Partial<T> & { id: any };
+
+export interface IDiaryNoteWithInfo extends IDiaryNote {
+	questions: IDiaryQuestionAnswer[];
+	goals: IDiaryGoalAnswer[];
+}
+
+export interface IDiaryGoalAnswer {
+	answer: string | null;
+	answerId: number;
+	goal: IGoal | null;
+}
+export interface IDiaryQuestionAnswer {
+	answer: string | null;
+	answerId: number;
+	question: IDiaryQuestion | null;
+}

@@ -17,7 +17,7 @@ export function CreateNewNoteButton() {
 		<Button
 			className="flex-grow-0"
 			color="primary"
-			variant="light"
+			variant="bordered"
 			onPress={onCreateNote}
 			isDisabled={isCreating}
 		>

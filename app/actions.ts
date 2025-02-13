@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
-import { IDiaryAnswer, IDiaryNote } from "@/types";
+import { IDiaryAnswer, IDiaryNote, IDiaryNoteWithInfo } from "@/types";
 
 const getURL = () => {
 	let url =
@@ -364,4 +364,58 @@ export const updateAnswer = async (
 		throw new Error(error.message);
 	}
 	return data;
+};
+
+export const getNotesWithRelations = async () => {
+	const supabase = await createClient();
+	const userId = await getUserFromSession(supabase);
+
+	// Get notes with their answers, and each answer's associated question and goal
+	const { data: notes, error } = await supabase
+		.from("diary_notes")
+		.select(
+			`
+		*,
+		diary_answers!diary_answers_note_id_fkey (
+		  *,
+		  diary_questions!diary_answers_question_id_fkey (*),
+		  goals!diary_answers_goal_id_fkey (*)
+		)
+	  `
+		)
+		.eq("user_id", userId)
+		.order("date", { ascending: true });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	// Transform the data to a more usable structure
+	const transformedNotes = notes?.map((note) => {
+		const answers = note.diary_answers || [];
+
+		// Separate question answers and goal answers
+		const questionAnswers = answers.filter(
+			(a) => a.question_id && a.diary_questions
+		);
+		const goalAnswers = answers.filter((a) => a.goal_id && a.goals);
+
+		return {
+			...note,
+			questions:
+				questionAnswers.map((qa) => ({
+					answer: qa.text || "",
+					answerId: qa.id,
+					question: qa.diary_questions,
+				})) ?? [],
+			goals:
+				goalAnswers.map((ga) => ({
+					answer: ga.text || "",
+					answerId: ga.id,
+					goal: ga.goals,
+				})) ?? [],
+		};
+	});
+	const typedNotes: IDiaryNoteWithInfo[] = transformedNotes;
+	return typedNotes;
 };
