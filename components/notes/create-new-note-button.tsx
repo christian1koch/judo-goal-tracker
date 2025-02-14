@@ -10,7 +10,7 @@ export function CreateNewNoteButton() {
 		// TODO: try catch
 		setIsCreating(true);
 		const newNote = await createNote("", "");
-		router.push(`/protected/notes/${newNote.id}`);
+		router.push(`/protected/notes/edit/${newNote.id}`);
 	};
 	const [isCreating, setIsCreating] = useState(false);
 	return (
