@@ -18,7 +18,9 @@ export default async function Page() {
 							key={n.id}
 							header={n.title}
 							title={
-								<Link href={`./notes/${n.id}`}>Go to note</Link>
+								<Link href={`./notes/edit/${n.id}`}>
+									Go to note
+								</Link>
 							}
 							description={n.date}
 						/>

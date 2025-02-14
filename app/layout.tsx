@@ -42,18 +42,6 @@ export default function RootLayout({
 					>
 						<main className="min-h-screen h-screen flex flex-col items-center antialiased">
 							<div className="flex-1 w-full flex flex-col items-center h-full">
-								<nav className="w-full flex justify-center h-16 fixed top-0 z-20 bg-background border-b">
-									{/* <div className="w-full  bg-background">
-										{!hasEnvVars ? (
-											<EnvVarWarning />
-										) : (
-											<div className="flex flex-row gap-2">
-												<HeaderAuth />
-												<ThemeSwitcher />
-											</div>
-										)}
-									</div> */}
-								</nav>
 								<div className="w-full flex-1 h-full mt-16">
 									{children}
 								</div>
