@@ -28,31 +28,30 @@ export function GoalCard(props: GoalCardProps) {
 				initialName={props.title}
 				initialDescription={props.description}
 			/>
-			<Card
-				className="max-w-[400px] min-w-[400px] m-10 hover:opacity-85 bg-background border"
-				isPressable
-				onPress={onOpen}
-			>
-				<CardHeader className="flex gap-3">
+			<Card className="max-w-[400px] min-w-[400px] m-10 hover:opacity-85 bg-background border">
+				<CardHeader
+					className="cursor-pointer flex gap-3"
+					onClick={onOpen}
+				>
 					<div className="flex flex-row justify-start gap-1 w-full">
 						<IconRocket className="mr-4 stroke-primary-400" />
 						<p className="text-xl">{props.title}</p>
 					</div>
 				</CardHeader>
 				<Divider />
-				<CardBody className="p-6">
+				<CardBody className="p-6 cursor-pointer" onClick={onOpen}>
 					<p>{props.description}</p>
 				</CardBody>
 				<Divider />
-				<CardFooter>
+				<CardFooter onClick={(e) => e.stopPropagation()}>
 					<Link
-						href={"#"}
+						href={`/protected/notes/timeline?filterId=${props.id}&isGoal=true`}
 						onClick={(e) => {
 							e.stopPropagation();
 						}}
 					>
 						<p className="text-primary-400 font-thin">
-							Click here to see the notes with this goal - TODO
+							Click here to see the notes with this goal
 						</p>
 					</Link>
 				</CardFooter>
