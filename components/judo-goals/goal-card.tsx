@@ -28,7 +28,7 @@ export function GoalCard(props: GoalCardProps) {
 				initialName={props.title}
 				initialDescription={props.description}
 			/>
-			<Card className="max-w-[400px] min-w-[400px] m-10 hover:opacity-85 bg-background border">
+			<Card className="max-w-[400px] w-72 md:w-96 m-10 hover:opacity-85 bg-background border">
 				<CardHeader
 					className="cursor-pointer flex gap-3"
 					onClick={onOpen}

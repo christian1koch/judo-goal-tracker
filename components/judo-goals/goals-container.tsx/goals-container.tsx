@@ -7,7 +7,10 @@ export function GoalsContainer({
 }: React.ComponentPropsWithoutRef<"div">) {
 	return (
 		<div
-			className={cn("flex flex-row flex-wrap justify-around", className)}
+			className={cn(
+				"flex flex-col items-center md:items-stretch md:flex-row flex-wrap justify-around",
+				className
+			)}
 			{...props}
 		>
 			{children}
