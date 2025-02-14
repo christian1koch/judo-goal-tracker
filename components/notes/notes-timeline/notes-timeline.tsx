@@ -1,5 +1,5 @@
 import { getNotesWithRelations } from "@/app/actions";
-import { Timeline, TimelineEntry } from "../ui/timeline";
+import { Timeline, TimelineEntry } from "../../ui/timeline";
 import dayjs from "dayjs";
 import { IDiaryGoalAnswer, IDiaryQuestionAnswer } from "@/types";
 import { IconHelpHexagon, IconRocket } from "@tabler/icons-react";

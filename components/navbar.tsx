@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { CreateNewNoteButton } from "./notes/create-new-note-button";
-import { NotesTimelineButtonGroup } from "./notes/notes-timelane-button-group";
+import { NotesTimelineButtonGroup } from "./notes/notes-timeline/notes-timelane-button-group";
 import AddNewGoalModal from "./judo-goals/add-new-goal-modal";
 import { Button } from "@heroui/react";
 // Routes // This probably should be an enum
