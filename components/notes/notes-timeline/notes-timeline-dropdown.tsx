@@ -53,7 +53,7 @@ export function NotesTimelineDropdown({
 
 	return (
 		<Dropdown>
-			<DropdownTrigger className="self-end">
+			<DropdownTrigger className="self-end m-2">
 				<Button variant="bordered">{getTriggerTitle()}</Button>
 			</DropdownTrigger>
 			<DropdownMenu
