@@ -10,7 +10,7 @@ import {
 } from "@/types";
 import { IconHelpHexagon, IconRocket } from "@tabler/icons-react";
 import { NotesTimelineDropdown } from "./notes-timeline-dropdown";
-import { useState } from "react";
+import { useSearchParams } from "@/lib/hooks/useSearchParams";
 interface NotesTimelineProps {
 	notes: IDiaryNoteWithInfo[];
 	defaultQuestions: IDiaryQuestion[];
@@ -21,7 +21,33 @@ export function NotesTimeline({
 	defaultGoals,
 	defaultQuestions,
 }: NotesTimelineProps) {
-	const [filterId, setCurrentFilterId] = useState<number>();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const filterIdSearchParam = searchParams.get("filterId");
+	const filterId = filterIdSearchParam
+		? Number(filterIdSearchParam)
+		: undefined;
+	const isGoalSearchParam = searchParams.get("isGoal") ?? undefined;
+	const isGoal = isGoalSearchParam != null;
+
+	const setCurrentFilterId = (
+		newFilterId: number | undefined,
+		isGoal?: boolean
+	) =>
+		setSearchParams((prev) => {
+			const newSearchParams = new URLSearchParams(prev);
+			if (newFilterId) {
+				newSearchParams.set("filterId", String(newFilterId));
+				if (isGoal) {
+					newSearchParams.set("isGoal", "true");
+					return newSearchParams;
+				}
+				newSearchParams.delete("isGoal");
+				return newSearchParams;
+			}
+			newSearchParams.delete("filterId");
+			newSearchParams.delete("isGoal");
+			return newSearchParams;
+		});
 
 	const getOrder = (index: number, length: number) => {
 		if (index === 0) {
@@ -34,6 +60,9 @@ export function NotesTimeline({
 	};
 	const hasFilter = filterId != null;
 	const getFilteredQuestions = (questions: IDiaryQuestionAnswer[]) => {
+		if (isGoal) {
+			return [];
+		}
 		if (hasFilter) {
 			return questions.filter(
 				(question) => question.question?.id === filterId
@@ -42,6 +71,9 @@ export function NotesTimeline({
 		return questions;
 	};
 	const getFilteredGoals = (goals: IDiaryGoalAnswer[]) => {
+		if (hasFilter && !isGoal) {
+			return [];
+		}
 		if (hasFilter) {
 			return goals.filter((goal) => goal.goal?.id === filterId);
 		}

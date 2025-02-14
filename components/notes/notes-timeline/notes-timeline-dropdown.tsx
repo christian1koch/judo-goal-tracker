@@ -11,11 +11,13 @@ import {
 import { QuestionSection } from "./notes-timeline";
 
 const SHOW_ALL = "show_all";
+const GOAL_ID = "goal_id";
+const QUESTION_ID = "question_id";
 interface NotesTimelineDropdownProps {
 	questions: IDiaryQuestion[];
 	goals: IGoal[];
 	currentSelectedAnswerId?: number;
-	setSelectionChange: (newId?: number) => void;
+	setSelectionChange: (newId: number | undefined, isGoal?: boolean) => void;
 }
 export function NotesTimelineDropdown({
 	questions,
@@ -61,7 +63,13 @@ export function NotesTimelineDropdown({
 					if (key === SHOW_ALL) {
 						return setSelectionChange(undefined);
 					}
-					return setSelectionChange(Number(key));
+					let stringKey = key.toString();
+					if (stringKey.includes(GOAL_ID)) {
+						stringKey = stringKey.replace(GOAL_ID, "");
+						return setSelectionChange(Number(stringKey), true);
+					}
+					stringKey = stringKey.replace(QUESTION_ID, "");
+					return setSelectionChange(Number(stringKey));
 				}}
 			>
 				<DropdownSection>
@@ -71,7 +79,7 @@ export function NotesTimelineDropdown({
 				</DropdownSection>
 				<DropdownSection title="Goals">
 					{goals.map((goal) => (
-						<DropdownItem key={goal.id}>
+						<DropdownItem key={GOAL_ID + goal.id}>
 							<QuestionSection
 								question={goal.title}
 								isGoal
@@ -82,7 +90,7 @@ export function NotesTimelineDropdown({
 				</DropdownSection>
 				<DropdownSection title="General Questions">
 					{questions.map((question) => (
-						<DropdownItem key={question.id}>
+						<DropdownItem key={QUESTION_ID + question.id}>
 							<QuestionSection
 								question={question.text ?? ""}
 								isAnswerHidden
