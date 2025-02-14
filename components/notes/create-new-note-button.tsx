@@ -15,7 +15,6 @@ export function CreateNewNoteButton() {
 	const [isCreating, setIsCreating] = useState(false);
 	return (
 		<Button
-			className="flex-grow-0"
 			color="primary"
 			variant="bordered"
 			onPress={onCreateNote}

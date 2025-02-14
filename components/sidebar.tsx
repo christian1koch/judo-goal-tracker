@@ -80,7 +80,6 @@ export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
 };
 
 export const DesktopSidebar = ({
-	className,
 	children,
 	...props
 }: React.ComponentProps<typeof motion.div>) => {

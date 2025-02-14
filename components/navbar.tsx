@@ -4,7 +4,16 @@ import { usePathname } from "next/navigation";
 import { CreateNewNoteButton } from "./notes/create-new-note-button";
 import { NotesTimelineButtonGroup } from "./notes/notes-timeline/notes-timelane-button-group";
 import AddNewGoalModal from "./judo-goals/add-new-goal-modal";
-import { Button } from "@heroui/react";
+import {
+	Button,
+	Drawer,
+	DrawerBody,
+	DrawerContent,
+	DrawerHeader,
+	useDisclosure,
+} from "@heroui/react";
+import { IconMenu2 } from "@tabler/icons-react";
+import { useEffect } from "react";
 // Routes // This probably should be an enum
 const notesRoute = "notes";
 const goalsRoute = "goals";
@@ -43,18 +52,14 @@ export function Navbar() {
 	};
 	const getNavbarItems = () => {
 		if (currentRoute === editNoteRoute) {
-			return (
-				<div className="flex gap-2">
-					<Button color="danger">TODO: DELETE NOTE</Button>
-				</div>
-			);
+			return <Button color="danger">TODO: DELETE NOTE</Button>;
 		}
 		if (currentRoute === notesRoute) {
 			return (
-				<div className="flex gap-2">
+				<>
 					<NotesTimelineButtonGroup />
 					<CreateNewNoteButton />
-				</div>
+				</>
 			);
 		}
 		if (currentRoute === goalsRoute) {
@@ -63,9 +68,66 @@ export function Navbar() {
 		return null;
 	};
 	return (
-		<nav className="w-full flex h-16 fixed top-0 z-20 bg-background border-b items-center flex-row justify-between px-10">
-			<h1 className="text-3xl font-extrabold">{getTitle()}</h1>
-			{getNavbarItems()}
-		</nav>
+		<>
+			<MobileNavbar title={getTitle()}>{getNavbarItems()}</MobileNavbar>
+			<DesktopNavbar title={getTitle()}>{getNavbarItems()}</DesktopNavbar>
+		</>
 	);
 }
+
+const DesktopNavbar = ({
+	children,
+	title,
+}: {
+	children: React.ReactNode;
+	title: string | null;
+}) => {
+	return (
+		<nav className="hidden w-full md:flex h-16 fixed top-0 z-20 bg-background border-b items-center flex-row justify-between px-10">
+			<h1 className="text-lg md:text-3xl font-extrabold">{title}</h1>
+			<div className="flex gap-2">{children}</div>
+		</nav>
+	);
+};
+const MobileNavbar = ({
+	children,
+	title,
+}: {
+	children: React.ReactNode;
+	title: string | null;
+}) => {
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const pathname = usePathname();
+
+	/**
+	 * Needed to close the drawer when the path changes
+	 */
+	useEffect(() => {
+		if (isOpen) {
+			onOpenChange();
+		}
+		// passing onOpenChange or isOpen here would break it
+		// we want to close the dialog only when pathname changes.
+	}, [pathname]);
+
+	return (
+		<nav className="w-full flex md:hidden h-16 fixed top-0 z-20 bg-background border-b items-center flex-row justify-between pl-20 pr-2 md:px-10">
+			<h1 className="text-lg md:text-3xl font-extrabold">{title}</h1>
+			<Button variant="ghost" color="primary" isIconOnly onPress={onOpen}>
+				{<IconMenu2 />}
+			</Button>
+			<Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+				<DrawerContent>
+					{() => (
+						<>
+							<DrawerHeader className="flex flex-col gap-1">
+								{title}
+							</DrawerHeader>
+							<DrawerBody>{children}</DrawerBody>
+						</>
+					)}
+				</DrawerContent>
+			</Drawer>
+		</nav>
+	);
+};
