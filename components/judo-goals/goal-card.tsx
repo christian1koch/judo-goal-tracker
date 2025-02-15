@@ -45,13 +45,13 @@ export function GoalCard(props: GoalCardProps) {
 				<Divider />
 				<CardFooter onClick={(e) => e.stopPropagation()}>
 					<Link
-						href={`/protected/notes/timeline?filterId=${props.id}&isGoal=true`}
+						href={`/protected/diary-entries/timeline?filterId=${props.id}&isGoal=true`}
 						onClick={(e) => {
 							e.stopPropagation();
 						}}
 					>
 						<p className="text-primary-400 font-thin">
-							Click here to see the notes with this goal
+							Click here to see the diary entries with this goal
 						</p>
 					</Link>
 				</CardFooter>

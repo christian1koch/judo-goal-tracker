@@ -1,6 +1,6 @@
 import { Card, Skeleton } from "@heroui/react";
 
-export function EditNoteFormLoading() {
+export function EditDiaryEntryFormLoading() {
 	return (
 		<div>
 			<Card

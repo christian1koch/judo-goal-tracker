@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from "@heroui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function NotesTimelineButtonGroup() {
+export function DiaryEntriesTimelineButtonGroup() {
 	const pathname = usePathname();
 	let isTimeline = false;
 	if (pathname.toLowerCase().includes("timeline")) {
@@ -15,7 +15,7 @@ export function NotesTimelineButtonGroup() {
 			<Button
 				prefetch
 				as={Link}
-				href="/protected/notes"
+				href="/protected/diary-entries"
 				isDisabled={isGridView}
 			>
 				Grid View
@@ -23,7 +23,7 @@ export function NotesTimelineButtonGroup() {
 			<Button
 				prefetch
 				as={Link}
-				href="/protected/notes/timeline"
+				href="/protected/diary-entries/timeline"
 				isDisabled={isTimeline}
 			>
 				Timeline View

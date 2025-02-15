@@ -9,18 +9,18 @@ import {
 	IGoal,
 } from "@/types";
 import { IconHelpHexagon, IconRocket } from "@tabler/icons-react";
-import { NotesTimelineDropdown } from "./notes-timeline-dropdown";
+import { DiaryEntriesTimelineDropdown } from "./diary-entries-timeline-dropdown";
 import { useSearchParams } from "@/lib/hooks/useSearchParams";
-interface NotesTimelineProps {
-	notes: IDiaryEntryWithInfo[];
+interface DiaryEntriesTimelineProps {
+	diaryEntries: IDiaryEntryWithInfo[];
 	defaultQuestions: IDiaryQuestion[];
 	defaultGoals: IGoal[];
 }
-export function NotesTimeline({
-	notes,
+export function DiaryEntriesTimeline({
+	diaryEntries,
 	defaultGoals,
 	defaultQuestions,
-}: NotesTimelineProps) {
+}: DiaryEntriesTimelineProps) {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const filterIdSearchParam = searchParams.get("filterId");
 	const filterId = filterIdSearchParam
@@ -79,7 +79,7 @@ export function NotesTimeline({
 		}
 		return goals;
 	};
-	const filteredNotes = notes
+	const filteredNotes = diaryEntries
 		.map((note) => {
 			const filteredQuestions = getFilteredQuestions(note.questions);
 			const filteredGoals = getFilteredGoals(note.goals);
@@ -95,7 +95,7 @@ export function NotesTimeline({
 		.filter((n) => n !== null);
 	return (
 		<>
-			<NotesTimelineDropdown
+			<DiaryEntriesTimelineDropdown
 				questions={defaultQuestions}
 				goals={defaultGoals}
 				setSelectionChange={setCurrentFilterId}
@@ -107,7 +107,7 @@ export function NotesTimeline({
 						key={note.id}
 						title={note.title ?? ""}
 						date={dayjs(note.date).toDate()}
-						order={getOrder(i, notes.length)}
+						order={getOrder(i, diaryEntries.length)}
 					>
 						<QuestionSectionlist
 							questionAnswers={note.questions}

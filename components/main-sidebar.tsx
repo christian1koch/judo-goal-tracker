@@ -27,7 +27,7 @@ export function MainSidebar() {
 		},
 		{
 			label: "Notes",
-			href: "/protected/notes",
+			href: "/protected/diary-entries",
 			icon: <IconNotes className=" h-5 w-5 flex-shrink-0" />,
 		},
 		{

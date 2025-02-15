@@ -1,7 +1,7 @@
 import { BentoGrid } from "@/components/bento-grid";
 import { cn } from "@/lib/utils";
 
-export const NotesBentoGrid = ({
+export const DiaryEntriesBentoGrid = ({
 	className,
 	children,
 }: {

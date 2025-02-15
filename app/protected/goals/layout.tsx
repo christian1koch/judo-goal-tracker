@@ -1,5 +1,3 @@
-import AddNewGoalModal from "@/components/judo-goals/add-new-goal-modal";
-
 export default async function GoalsLayout({
 	children,
 }: {

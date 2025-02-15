@@ -1,38 +1,38 @@
 "use client";
-import { updateAnswer, updateNote } from "@/app/actions";
+import { updateAnswer, updateDiaryEntry } from "@/app/actions";
 import { IDiaryAnswer, IDiaryEntry, IDiaryQuestion, IGoal } from "@/types";
 import { DatePicker, Divider, Input, Textarea } from "@heroui/react";
 import { parseDate } from "@internationalized/date";
 import { ChangeEvent, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-interface EditNodeFormProps {
+interface EditDiaryEntryFormProps {
 	goals: IGoal[];
 	questions: IDiaryQuestion[];
 	answers: IDiaryAnswer[];
-	note: IDiaryEntry;
+	diaryEntry: IDiaryEntry;
 }
 function getGoalText(goalTitle: string) {
 	return "What did you do to work on your goal: " + goalTitle;
 }
 
-export function EditNoteForm({
+export function EditDiaryEntryForm({
 	goals,
 	questions,
 	answers,
-	note,
-}: EditNodeFormProps) {
+	diaryEntry,
+}: EditDiaryEntryFormProps) {
 	const goalAnswers = answers.filter((answer) => answer.goal_id != null);
 	const questionAnswers = answers.filter(
 		(answer) => answer.question_id != null
 	);
 
 	const updateTitleDebounced = useDebouncedCallback(async (value: string) => {
-		await updateNote({ ...note, title: value });
+		await updateDiaryEntry({ ...diaryEntry, title: value });
 	}, 1000);
 
 	const updateDate = async (date: string) => {
-		await updateNote({ ...note, date });
+		await updateDiaryEntry({ ...diaryEntry, date });
 	};
 
 	const getGoalAnswer = (goalId: number) => {
@@ -42,8 +42,8 @@ export function EditNoteForm({
 		return questionAnswers.find((a) => a.question_id === questionId);
 	};
 
-	const updateNoteText = async (text: string) => {
-		return await updateNote({ ...note, general_notes: text });
+	const updateDiaryEntryGeneralText = async (text: string) => {
+		return await updateDiaryEntry({ ...diaryEntry, general_notes: text });
 	};
 
 	const updateAnswerText = async (text: string, answer?: IDiaryAnswer) => {
@@ -60,7 +60,7 @@ export function EditNoteForm({
 					<Input
 						label="Title"
 						variant="underlined"
-						defaultValue={note.title ?? ""}
+						defaultValue={diaryEntry.title ?? ""}
 						onChange={(e) => updateTitleDebounced(e.target.value)}
 					/>
 				</div>
@@ -68,7 +68,7 @@ export function EditNoteForm({
 					<DatePicker
 						label="Date"
 						variant="underlined"
-						defaultValue={parseDate(note.date!)}
+						defaultValue={parseDate(diaryEntry.date!)}
 						onChange={(e) => {
 							if (e) {
 								updateDate(e.toString());
@@ -120,8 +120,8 @@ export function EditNoteForm({
 						<h2 className="text-2xl">General Notes</h2>
 						<QuestionSection
 							label="Write more information"
-							updateFn={updateNoteText}
-							defaultText={note.general_notes ?? ""}
+							updateFn={updateDiaryEntryGeneralText}
+							defaultText={diaryEntry.general_notes ?? ""}
 						/>
 					</div>
 				</section>

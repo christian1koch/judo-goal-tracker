@@ -229,12 +229,12 @@ export const getQuestions = async () => {
 	const { data: questions } = await supabase.from("diary_questions").select();
 	return questions;
 };
-export const getAnswersByNoteId = async (noteId: number) => {
+export const getAnswersByDiaryEntryId = async (diaryEntryId: number) => {
 	const supabase = await createClient();
 	const { data: answers } = await supabase
 		.from("diary_answers")
 		.select()
-		.eq("note_id", noteId);
+		.eq("note_id", diaryEntryId);
 	return answers;
 };
 
@@ -332,15 +332,15 @@ export const createDiaryEntry = async (title: string, generalNotes: string) => {
 	return diaryEntryData;
 };
 
-export const updateNote = async (
-	note: Partial<IDiaryEntry> & { id: number }
+export const updateDiaryEntry = async (
+	diaryEntry: Partial<IDiaryEntry> & { id: number }
 ) => {
 	const supabase = await createClient();
 
 	const { data, error } = await supabase
 		.from("diary_entry")
-		.update({ ...note })
-		.eq("id", note.id)
+		.update({ ...diaryEntry })
+		.eq("id", diaryEntry.id)
 		.select()
 		.single();
 	if (error) {

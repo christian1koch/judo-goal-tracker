@@ -1,4 +1,4 @@
-export default function NotesLayout({
+export default function DiaryEntriesLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;

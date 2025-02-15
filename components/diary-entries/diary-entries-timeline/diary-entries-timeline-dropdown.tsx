@@ -8,23 +8,23 @@ import {
 	DropdownItem,
 	DropdownSection,
 } from "@heroui/react";
-import { QuestionSection } from "./notes-timeline";
+import { QuestionSection } from "./diary-entries-timeline";
 
 const SHOW_ALL = "show_all";
 const GOAL_ID = "goal_id";
 const QUESTION_ID = "question_id";
-interface NotesTimelineDropdownProps {
+interface DiaryEntriesTimelineDropdownProps {
 	questions: IDiaryQuestion[];
 	goals: IGoal[];
 	currentSelectedAnswerId?: number;
 	setSelectionChange: (newId: number | undefined, isGoal?: boolean) => void;
 }
-export function NotesTimelineDropdown({
+export function DiaryEntriesTimelineDropdown({
 	questions,
 	goals,
 	currentSelectedAnswerId,
 	setSelectionChange,
-}: NotesTimelineDropdownProps) {
+}: DiaryEntriesTimelineDropdownProps) {
 	const [currentSelectedGoal] = goals.filter(
 		(goal) => goal.id === currentSelectedAnswerId
 	);

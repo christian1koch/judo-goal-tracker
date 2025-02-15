@@ -4,23 +4,23 @@ import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function CreateNewNoteButton() {
+export function CreateNewDiaryEntryButton() {
 	const router = useRouter();
-	const onCreateNote = async () => {
+	const onCreateDiaryEntry = async () => {
 		// TODO: try catch
 		setIsCreating(true);
 		const newNote = await createDiaryEntry("", "");
-		router.push(`/protected/notes/edit/${newNote.id}`);
+		router.push(`/protected/diary-entries/edit/${newNote.id}`);
 	};
 	const [isCreating, setIsCreating] = useState(false);
 	return (
 		<Button
 			color="primary"
 			variant="bordered"
-			onPress={onCreateNote}
+			onPress={onCreateDiaryEntry}
 			isDisabled={isCreating}
 		>
-			Create New Note
+			Create New Diary Entry
 		</Button>
 	);
 }

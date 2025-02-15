@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { CreateNewNoteButton } from "./notes/create-new-note-button";
-import { NotesTimelineButtonGroup } from "./notes/notes-timeline/notes-timelane-button-group";
+import { CreateNewDiaryEntryButton } from "./diary-entries/create-new-diary-entry-button";
+import { DiaryEntriesTimelineButtonGroup } from "./diary-entries/diary-entries-timeline/diary-entries-timeline-button-group";
 import AddNewGoalModal from "./judo-goals/add-new-goal-modal";
 import {
 	Button,
@@ -15,13 +15,13 @@ import {
 import { IconMenu2 } from "@tabler/icons-react";
 import { useEffect } from "react";
 // Routes // This probably should be an enum
-const notesRoute = "notes";
+const diaryEntriesRoute = "diary-entries";
 const goalsRoute = "goals";
-const editNoteRoute = "notes/edit";
+const editNoteRoute = "diary-entries/edit";
 
-const notesTitle = "Notes";
+const diaryEntriesTitle = "Diary";
 const goalsTitle = "Goals";
-const editNoteTitle = "Edit Goal";
+const editDiaryEntryTitle = "Edit Diary Entry";
 
 export function Navbar() {
 	const pathname = usePathname();
@@ -29,8 +29,8 @@ export function Navbar() {
 		if (pathname.includes(editNoteRoute)) {
 			return editNoteRoute;
 		}
-		if (pathname.includes(notesRoute)) {
-			return notesRoute;
+		if (pathname.includes(diaryEntriesRoute)) {
+			return diaryEntriesRoute;
 		}
 		if (pathname.includes(goalsRoute)) {
 			return goalsRoute;
@@ -40,10 +40,10 @@ export function Navbar() {
 	const currentRoute = getCurrentRoute();
 	const getTitle = () => {
 		if (currentRoute === editNoteRoute) {
-			return editNoteTitle;
+			return editDiaryEntryTitle;
 		}
-		if (currentRoute === notesRoute) {
-			return notesTitle;
+		if (currentRoute === diaryEntriesRoute) {
+			return diaryEntriesTitle;
 		}
 		if (currentRoute === goalsRoute) {
 			return goalsTitle;
@@ -54,11 +54,11 @@ export function Navbar() {
 		if (currentRoute === editNoteRoute) {
 			return <Button color="danger">TODO: DELETE NOTE</Button>;
 		}
-		if (currentRoute === notesRoute) {
+		if (currentRoute === diaryEntriesRoute) {
 			return (
 				<>
-					<NotesTimelineButtonGroup />
-					<CreateNewNoteButton />
+					<DiaryEntriesTimelineButtonGroup />
+					<CreateNewDiaryEntryButton />
 				</>
 			);
 		}
