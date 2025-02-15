@@ -1,6 +1,6 @@
 "use client";
 import { updateAnswer, updateNote } from "@/app/actions";
-import { IDiaryAnswer, IDiaryNote, IDiaryQuestion, IGoal } from "@/types";
+import { IDiaryAnswer, IDiaryEntry, IDiaryQuestion, IGoal } from "@/types";
 import { DatePicker, Divider, Input, Textarea } from "@heroui/react";
 import { parseDate } from "@internationalized/date";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +10,7 @@ interface EditNodeFormProps {
 	goals: IGoal[];
 	questions: IDiaryQuestion[];
 	answers: IDiaryAnswer[];
-	note: IDiaryNote;
+	note: IDiaryEntry;
 }
 function getGoalText(goalTitle: string) {
 	return "What did you do to work on your goal: " + goalTitle;

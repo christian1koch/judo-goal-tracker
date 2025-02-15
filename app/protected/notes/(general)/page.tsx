@@ -1,11 +1,11 @@
-import { getALlNotes } from "@/app/actions";
+import { getAllDiaryEntries } from "@/app/actions";
 import { BentoGridItem } from "@/components/bento-grid";
 import { NotesBentoGrid } from "@/components/notes/components/notes-bento-grid";
 // import { Icon12Hours } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default async function Page() {
-	const notes = await getALlNotes();
+	const notes = await getAllDiaryEntries();
 
 	return (
 		<>

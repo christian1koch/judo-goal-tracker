@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
-import { IDiaryAnswer, IDiaryNote, IDiaryNoteWithInfo } from "@/types";
+import { IDiaryAnswer, IDiaryEntry, IDiaryEntryWithInfo } from "@/types";
 
 const getURL = () => {
 	let url =
@@ -238,14 +238,14 @@ export const getAnswersByNoteId = async (noteId: number) => {
 	return answers;
 };
 
-export const getNoteById = async (noteId: number) => {
+export const getDiaryEntryById = async (diaryEntryId: number) => {
 	const supabase = await createClient();
 	const userId = await getUserFromSession(supabase);
 
-	const { data: note, error } = await supabase
-		.from("diary_notes")
+	const { data: diaryEntry, error } = await supabase
+		.from("diary_entry")
 		.select()
-		.eq("id", noteId)
+		.eq("id", diaryEntryId)
 		.eq("user_id", userId)
 		.single();
 
@@ -253,13 +253,13 @@ export const getNoteById = async (noteId: number) => {
 		throw new Error(error.message);
 	}
 
-	return note;
+	return diaryEntry;
 };
 
-export const getALlNotes = async () => {
+export const getAllDiaryEntries = async () => {
 	const supabase = await createClient();
 
-	const { data: note, error } = await supabase.from("diary_notes").select();
+	const { data: note, error } = await supabase.from("diary_entry").select();
 	if (error) {
 		throw new Error(error.message);
 	}
@@ -267,13 +267,13 @@ export const getALlNotes = async () => {
 	return note;
 };
 
-export const createNote = async (title: string, generalNotes: string) => {
+export const createDiaryEntry = async (title: string, generalNotes: string) => {
 	const supabase = await createClient();
 	const userId = await getUserFromSession(supabase);
 
-	// Crear la nota en diary_notes
-	const { data: noteData, error: noteError } = await supabase
-		.from("diary_notes")
+	// Crear la nota en diary_entry
+	const { data: diaryEntryData, error: error } = await supabase
+		.from("diary_entry")
 		.insert({
 			user_id: userId,
 			title,
@@ -283,11 +283,11 @@ export const createNote = async (title: string, generalNotes: string) => {
 		.select()
 		.single();
 
-	if (noteError) {
-		throw new Error(noteError.message);
+	if (error) {
+		throw new Error(error.message);
 	}
 
-	const noteId = noteData.id;
+	const noteId = diaryEntryData.id;
 
 	// Obtener todas las preguntas y metas del usuario
 	const { data: questions, error: questionError } = await supabase
@@ -329,16 +329,16 @@ export const createNote = async (title: string, generalNotes: string) => {
 	}
 
 	revalidatePath("/protected");
-	return noteData;
+	return diaryEntryData;
 };
 
 export const updateNote = async (
-	note: Partial<IDiaryNote> & { id: number }
+	note: Partial<IDiaryEntry> & { id: number }
 ) => {
 	const supabase = await createClient();
 
 	const { data, error } = await supabase
-		.from("diary_notes")
+		.from("diary_entry")
 		.update({ ...note })
 		.eq("id", note.id)
 		.select()
@@ -366,13 +366,13 @@ export const updateAnswer = async (
 	return data;
 };
 
-export const getNotesWithRelations = async () => {
+export const getDiaryEntryWithRelations = async () => {
 	const supabase = await createClient();
 	const userId = await getUserFromSession(supabase);
 
 	// Get notes with their answers, and each answer's associated question and goal
-	const { data: notes, error } = await supabase
-		.from("diary_notes")
+	const { data: diaryEntries, error } = await supabase
+		.from("diary_entry")
 		.select(
 			`
 		*,
@@ -391,8 +391,8 @@ export const getNotesWithRelations = async () => {
 	}
 
 	// Transform the data to a more usable structure
-	const transformedNotes = notes?.map((note) => {
-		const answers = note.diary_answers || [];
+	const transformedDiaryEntries = diaryEntries?.map((diaryEntry) => {
+		const answers = diaryEntry.diary_answers || [];
 
 		// Separate question answers and goal answers
 		const questionAnswers = answers.filter(
@@ -401,7 +401,7 @@ export const getNotesWithRelations = async () => {
 		const goalAnswers = answers.filter((a) => a.goal_id && a.goals);
 
 		return {
-			...note,
+			...diaryEntry,
 			questions:
 				questionAnswers.map((qa) => ({
 					answer: qa.text || "",
@@ -416,6 +416,6 @@ export const getNotesWithRelations = async () => {
 				})) ?? [],
 		};
 	});
-	const typedNotes: IDiaryNoteWithInfo[] = transformedNotes;
-	return typedNotes;
+	const typedDiaryEntries: IDiaryEntryWithInfo[] = transformedDiaryEntries;
+	return typedDiaryEntries;
 };

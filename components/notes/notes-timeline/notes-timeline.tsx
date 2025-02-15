@@ -3,7 +3,7 @@ import { Timeline, TimelineEntry } from "../../ui/timeline";
 import dayjs from "dayjs";
 import {
 	IDiaryGoalAnswer,
-	IDiaryNoteWithInfo,
+	IDiaryEntryWithInfo,
 	IDiaryQuestion,
 	IDiaryQuestionAnswer,
 	IGoal,
@@ -12,7 +12,7 @@ import { IconHelpHexagon, IconRocket } from "@tabler/icons-react";
 import { NotesTimelineDropdown } from "./notes-timeline-dropdown";
 import { useSearchParams } from "@/lib/hooks/useSearchParams";
 interface NotesTimelineProps {
-	notes: IDiaryNoteWithInfo[];
+	notes: IDiaryEntryWithInfo[];
 	defaultQuestions: IDiaryQuestion[];
 	defaultGoals: IGoal[];
 }

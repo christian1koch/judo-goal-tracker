@@ -1,7 +1,7 @@
 import {
 	getAnswersByNoteId,
 	getGoals,
-	getNoteById,
+	getDiaryEntryById,
 	getQuestions,
 } from "@/app/actions";
 import { EditNoteForm } from "@/components/notes/edit-note-form";
@@ -12,7 +12,7 @@ export default async function Page({
 	params: Promise<{ slug: string }>;
 }) {
 	const slug = (await params).slug;
-	const note = await getNoteById(Number(slug));
+	const note = await getDiaryEntryById(Number(slug));
 	const questions = await getQuestions();
 	const goals = await getGoals();
 	const answers = await getAnswersByNoteId(Number(slug));

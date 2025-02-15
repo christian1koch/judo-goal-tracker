@@ -7,12 +7,12 @@ export type IDiaryQuestion =
 
 export type IDiaryAnswer = Database["public"]["Tables"]["diary_answers"]["Row"];
 
-export type IDiaryNote = Database["public"]["Tables"]["diary_notes"]["Row"];
+export type IDiaryEntry = Database["public"]["Tables"]["diary_entry"]["Row"];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PartialWithId<T> = Partial<T> & { id: any };
 
-export interface IDiaryNoteWithInfo extends IDiaryNote {
+export interface IDiaryEntryWithInfo extends IDiaryEntry {
 	questions: IDiaryQuestionAnswer[];
 	goals: IDiaryGoalAnswer[];
 }
