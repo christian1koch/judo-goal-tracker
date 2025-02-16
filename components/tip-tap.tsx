@@ -146,7 +146,7 @@ export default function TextEditor() {
 				</OptionsButton>
 			</div>
 			<EditorContent className="p-4" editor={editor} />
-			<BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
+			{/* <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu> */}
 		</div>
 	);
 }
