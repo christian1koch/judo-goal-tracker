@@ -2,8 +2,8 @@ import { Button } from "@heroui/react";
 
 export function NotesSidebar() {
 	return (
-		<div className="max-h-[calc(100vh-5rem)]">
-			<div className="w-60 bg-default-50 h-full border flex flex-col flex-shrink-0 overflow-y-scroll">
+		<div className="h-[calc(100vh-5rem)]  absolute right-0 top-16">
+			<div className="w-60 bg-default-50 h-full border flex flex-col flex-shrink-0 overflow-y-auto rounded-b-lg">
 				<SidebarItem />
 				<SidebarItem isSelected />
 				<SidebarItem />

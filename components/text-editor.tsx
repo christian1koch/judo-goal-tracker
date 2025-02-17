@@ -38,7 +38,7 @@ export default function TextEditor() {
 	}
 
 	return (
-		<div className="flex flex-col gap-4 m-4 bg-default-50 border rounded-md">
+		<div className="flex flex-col gap-4 m-4 bg-default-50 border rounded-md flex-1 w-full">
 			<div className="flex sticky top-16 z-10 w-full">
 				<div className="md:flex w-full hidden">
 					<OptionsList editor={editor} />
