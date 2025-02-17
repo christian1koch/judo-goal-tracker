@@ -95,3 +95,8 @@
 		margin: 2rem 0;
 	}
 }
+
+.react-horizontal-scrolling-menu--inner-wrapper {
+	display: flex;
+	overflow-y: hidden;
+}
