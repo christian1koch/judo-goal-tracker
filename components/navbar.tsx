@@ -12,16 +12,25 @@ import {
 	DrawerHeader,
 	useDisclosure,
 } from "@heroui/react";
-import { IconMenu2 } from "@tabler/icons-react";
+import {
+	IconCirclePlusFilled,
+	IconMenu2,
+	IconSquareRounded,
+	IconSquareRoundedX,
+	IconSquareRoundedXFilled,
+} from "@tabler/icons-react";
 import { useEffect } from "react";
+import { CirclePlus } from "lucide-react";
 // Routes // This probably should be an enum
 const diaryEntriesRoute = "diary-entries";
 const goalsRoute = "goals";
 const editNoteRoute = "diary-entries/edit";
+const notesRoute = "notes";
 
 const diaryEntriesTitle = "Diary";
 const goalsTitle = "Goals";
 const editDiaryEntryTitle = "Edit Diary Entry";
+const notesTitle = "Notes";
 
 export function Navbar() {
 	const pathname = usePathname();
@@ -35,6 +44,9 @@ export function Navbar() {
 		if (pathname.includes(goalsRoute)) {
 			return goalsRoute;
 		}
+		if (pathname.includes(notesRoute)) {
+			return notesRoute;
+		}
 		return "";
 	};
 	const currentRoute = getCurrentRoute();
@@ -47,6 +59,9 @@ export function Navbar() {
 		}
 		if (currentRoute === goalsRoute) {
 			return goalsTitle;
+		}
+		if (currentRoute === notesRoute) {
+			return notesTitle;
 		}
 		return null;
 	};
@@ -64,6 +79,25 @@ export function Navbar() {
 		}
 		if (currentRoute === goalsRoute) {
 			return <AddNewGoalModal />;
+		}
+		if (currentRoute === notesRoute) {
+			return (
+				<div className="flex gap-2">
+					<Button
+						startContent={<IconCirclePlusFilled />}
+						color="primary"
+					>
+						Add new
+					</Button>
+					<Button
+						startContent={<IconSquareRoundedXFilled />}
+						variant="light"
+						color="danger"
+					>
+						Delete
+					</Button>
+				</div>
+			);
 		}
 		return null;
 	};
