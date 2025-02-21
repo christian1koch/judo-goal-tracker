@@ -1,5 +1,5 @@
 "use client";
-import { NotesSidebar } from "@/components/notes/notes-sidebar";
+import { DesktopNotesSidebar } from "@/components/notes/notes-sidebar";
 import TextEditor from "@/components/text-editor";
 import { Input } from "@heroui/react";
 
@@ -15,7 +15,7 @@ export default function PlaygroundPage() {
 				/>
 				<TextEditor />
 			</div>
-			<NotesSidebar />
+			<DesktopNotesSidebar />
 		</>
 	);
 }

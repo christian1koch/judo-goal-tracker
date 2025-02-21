@@ -15,12 +15,10 @@ import {
 import {
 	IconCirclePlusFilled,
 	IconMenu2,
-	IconSquareRounded,
-	IconSquareRoundedX,
 	IconSquareRoundedXFilled,
 } from "@tabler/icons-react";
 import { useEffect } from "react";
-import { CirclePlus } from "lucide-react";
+import { MobileNotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
 const diaryEntriesRoute = "diary-entries";
 const goalsRoute = "goals";
@@ -82,20 +80,23 @@ export function Navbar() {
 		}
 		if (currentRoute === notesRoute) {
 			return (
-				<div className="flex gap-2">
-					<Button
-						startContent={<IconCirclePlusFilled />}
-						color="primary"
-					>
-						Add new
-					</Button>
-					<Button
-						startContent={<IconSquareRoundedXFilled />}
-						variant="light"
-						color="danger"
-					>
-						Delete
-					</Button>
+				<div className="flex flex-col w-full items-center">
+					<div className="flex gap-2 w-full md:justify-start justify-between">
+						<Button
+							startContent={<IconCirclePlusFilled />}
+							color="primary"
+						>
+							Add new
+						</Button>
+						<Button
+							startContent={<IconSquareRoundedXFilled />}
+							variant="light"
+							color="danger"
+						>
+							Delete
+						</Button>
+					</div>
+					<MobileNotesSidebar />
 				</div>
 			);
 		}
