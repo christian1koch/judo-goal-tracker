@@ -3,20 +3,25 @@ import { INote } from "@/types";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useCurrentNoteContext } from "./notes-context";
 
 interface NotesSidebarProps {
 	notes: INote[];
 }
 export function DesktopNotesSidebar({ notes }: NotesSidebarProps) {
 	const id = useParamsId();
-
+	const { currentNoteTitle } = useCurrentNoteContext();
 	return (
 		<div className="h-[calc(100vh-5rem)] hidden md:block md:fixed right-0 top-16">
 			<div className="w-60 bg-default-50 h-full border flex flex-col flex-shrink-0 overflow-y-auto rounded-b-lg">
 				{notes.map((note) => (
 					<SidebarItem
 						key={note.id}
-						title={note.title ?? "untitled"}
+						title={
+							id === note.id
+								? currentNoteTitle
+								: (note.title ?? "untitled")
+						}
 						href={"/protected/notes/" + note.id}
 						isSelected={id === note.id}
 					/>
@@ -28,14 +33,19 @@ export function DesktopNotesSidebar({ notes }: NotesSidebarProps) {
 
 export function MobileNotesSidebar({ notes = [] }: NotesSidebarProps) {
 	const id = useParamsId();
-
+	console.log("useparams id", id);
+	const { currentNoteTitle } = useCurrentNoteContext();
 	return (
 		<div className="md:hidden relative w-full mt-2">
 			<div className="w-full bg-default-50 h-full border flex flex-col flex-shrink-0 overflow-y-auto rounded-b-lg">
 				{notes.map((note) => (
 					<SidebarItem
 						key={note.id}
-						title={note.title ?? "untitled"}
+						title={
+							id === note.id
+								? currentNoteTitle
+								: (note.title ?? "untitled")
+						}
 						href={"/protected/notes/" + note.id}
 						isSelected={id === note.id}
 					/>
@@ -65,11 +75,11 @@ export function SidebarItem({ isSelected, href, title }: SidebarItem) {
 	);
 }
 
-const useParamsId = () => {
-	const { _id } = useParams();
-	if (_id == null) {
+export const useParamsId = () => {
+	const { id } = useParams();
+	if (id == null) {
 		return undefined;
 	}
-	const id = Number(_id);
-	return id;
+	const _id = Number(id);
+	return _id;
 };

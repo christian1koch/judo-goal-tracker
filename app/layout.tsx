@@ -2,6 +2,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { HeroUIProvider } from "@heroui/react";
+import { CurrentNoteContextProvider } from "@/components/notes/notes-context";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
@@ -40,13 +41,15 @@ export default function RootLayout({
 						enableSystem
 						disableTransitionOnChange
 					>
-						<main className="min-h-screen h-screen flex flex-col items-center antialiased">
-							<div className="flex-1 w-full flex flex-col items-center h-full">
-								<div className="w-full flex-1 h-full mt-16">
-									{children}
+						<CurrentNoteContextProvider>
+							<main className="min-h-screen h-screen flex flex-col items-center antialiased">
+								<div className="flex-1 w-full flex flex-col items-center h-full">
+									<div className="w-full flex-1 h-full mt-16">
+										{children}
+									</div>
 								</div>
-							</div>
-						</main>
+							</main>
+						</CurrentNoteContextProvider>
 					</ThemeProvider>
 				</HeroUIProvider>
 			</body>

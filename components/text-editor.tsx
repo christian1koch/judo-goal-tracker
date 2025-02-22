@@ -7,6 +7,7 @@ import {
 	BubbleMenu,
 	Editor,
 	EditorContent,
+	EditorEvents,
 	FloatingMenu,
 	useEditor,
 } from "@tiptap/react";
@@ -28,10 +29,15 @@ import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "react-horizontal-scrolling-menu/dist/styles.css";
 import { cn } from "@/lib/utils";
 
-export default function TextEditor() {
+interface TextEditorProps {
+	content?: string;
+	onUpdate?: (props: EditorEvents["update"]) => void;
+}
+export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 	const editor = useEditor({
 		extensions,
-		content,
+		content: content || placeholderContent,
+		onUpdate,
 	});
 	if (!editor) {
 		return null;
@@ -348,7 +354,7 @@ const extensions = [
 	}),
 ];
 
-const content = `
+const placeholderContent = `
 <h2>
   Hajime!
 </h2>

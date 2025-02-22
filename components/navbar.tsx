@@ -18,7 +18,7 @@ import {
 	IconSquareRoundedXFilled,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { MobileNotesSidebar } from "./notes/sidebars";
+import { MobileNotesSidebar, useParamsId } from "./notes/sidebars";
 import { getAllNotes } from "@/app/actions";
 import { INote } from "@/types";
 
@@ -36,6 +36,7 @@ const notesTitle = "Notes";
 
 export function Navbar() {
 	const pathname = usePathname();
+	const id = useParamsId();
 	const [notes, setNotes] = useState<INote[]>([]);
 
 	const getCurrentRoute = () => {
@@ -96,23 +97,28 @@ export function Navbar() {
 			return <AddNewGoalModal />;
 		}
 		if (currentRoute === notesRoute) {
+			if (!notes) {
+				return null;
+			}
 			return (
 				<div className="flex flex-col w-full items-center">
-					<div className="flex gap-2 w-full md:justify-start justify-between">
-						<Button
-							startContent={<IconCirclePlusFilled />}
-							color="primary"
-						>
-							Add new
-						</Button>
-						<Button
-							startContent={<IconSquareRoundedXFilled />}
-							variant="light"
-							color="danger"
-						>
-							Delete
-						</Button>
-					</div>
+					{id != null && (
+						<div className="flex gap-2 w-full md:justify-start justify-between">
+							<Button
+								startContent={<IconCirclePlusFilled />}
+								color="primary"
+							>
+								New note
+							</Button>
+							<Button
+								startContent={<IconSquareRoundedXFilled />}
+								variant="light"
+								color="danger"
+							>
+								Delete
+							</Button>
+						</div>
+					)}
 					<MobileNotesSidebar notes={notes} />
 				</div>
 			);
