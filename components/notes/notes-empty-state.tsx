@@ -1,5 +1,4 @@
-import { Button } from "@heroui/react";
-import { IconCirclePlusFilled, IconNotes } from "@tabler/icons-react";
+import { IconNotes } from "@tabler/icons-react";
 import { AddNewNotesButton } from "./add-new-note";
 
 interface NotesEmptyState {
