@@ -9,13 +9,13 @@ import { EditDiaryEntryForm } from "@/components/diary-entries/edit-diary-entry-
 export default async function Page({
 	params,
 }: {
-	params: Promise<{ slug: string }>;
+	params: Promise<{ id: string }>;
 }) {
-	const slug = (await params).slug;
-	const diaryEntry = await getDiaryEntryById(Number(slug));
+	const id = (await params).id;
+	const diaryEntry = await getDiaryEntryById(Number(id));
 	const questions = await getQuestions();
 	const goals = await getGoals();
-	const answers = await getAnswersByDiaryEntryId(Number(slug));
+	const answers = await getAnswersByDiaryEntryId(Number(id));
 	if (!questions || !goals || !diaryEntry || !answers) {
 		return <div>Cant get questions...</div>;
 	}

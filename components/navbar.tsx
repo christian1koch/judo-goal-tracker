@@ -12,17 +12,14 @@ import {
 	DrawerHeader,
 	useDisclosure,
 } from "@heroui/react";
-import {
-	IconCirclePlusFilled,
-	IconMenu2,
-	IconSquareRoundedXFilled,
-} from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { MobileNotesSidebar, useParamsId } from "./notes/sidebars";
 import { getAllNotes } from "@/app/actions";
 import { INote } from "@/types";
 import { AddNewNotesButton } from "./notes/add-new-note";
 import { DeleteNoteButton } from "./notes/delete-note-button";
+import { DeleteDiaryEntryButton } from "./diary-entries/delete-diary-entry-button";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -39,6 +36,7 @@ const notesTitle = "Notes";
 export function Navbar() {
 	const pathname = usePathname();
 	const id = useParamsId();
+	console.log("paramsId", id);
 	const [notes, setNotes] = useState<INote[]>([]);
 
 	const getCurrentRoute = () => {
@@ -84,8 +82,8 @@ export function Navbar() {
 	}, [currentRoute, id]);
 
 	const getNavbarItems = () => {
-		if (currentRoute === editNoteRoute) {
-			return <Button color="danger">TODO: DELETE NOTE</Button>;
+		if (currentRoute === editNoteRoute && id != null) {
+			return <DeleteDiaryEntryButton id={id} />;
 		}
 		if (currentRoute === diaryEntriesRoute) {
 			return (

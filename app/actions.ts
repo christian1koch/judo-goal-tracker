@@ -495,3 +495,13 @@ export const deleteNote = async (id: number) => {
 	}
 	revalidatePath("/protected");
 };
+
+export const deleteDiaryEntry = async (id: number) => {
+	const supabase = await createClient();
+
+	const { error } = await supabase.from("diary_entry").delete().eq("id", id);
+	if (error) {
+		throw new Error(error.message);
+	}
+	revalidatePath("/protected");
+};
