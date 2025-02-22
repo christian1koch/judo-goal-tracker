@@ -22,6 +22,7 @@ import { MobileNotesSidebar, useParamsId } from "./notes/sidebars";
 import { getAllNotes } from "@/app/actions";
 import { INote } from "@/types";
 import { AddNewNotesButton } from "./notes/add-new-note";
+import { DeleteNoteButton } from "./notes/delete-note-button";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -106,13 +107,7 @@ export function Navbar() {
 					{id != null && (
 						<div className="flex gap-2 w-full md:justify-start justify-between">
 							<AddNewNotesButton />
-							<Button
-								startContent={<IconSquareRoundedXFilled />}
-								variant="light"
-								color="danger"
-							>
-								Delete
-							</Button>
+							<DeleteNoteButton id={id} />
 						</div>
 					)}
 					<MobileNotesSidebar notes={notes} />

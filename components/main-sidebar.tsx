@@ -5,6 +5,7 @@ import {
 	Icon12Hours,
 	IconBrandTabler,
 	IconLogout,
+	IconNotebook,
 	IconNotes,
 	IconTargetArrow,
 } from "@tabler/icons-react";
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import JudoIcon from "../public/img/JudoIcon.svg";
+import { usePathname } from "next/navigation";
 
 export function MainSidebar() {
 	const links = [
@@ -26,8 +28,13 @@ export function MainSidebar() {
 			icon: <IconTargetArrow className=" h-5 w-5 flex-shrink-0" />,
 		},
 		{
-			label: "Notes",
+			label: "Diary Entries",
 			href: "/protected/diary-entries",
+			icon: <IconNotebook className=" h-5 w-5 flex-shrink-0" />,
+		},
+		{
+			label: "Notes",
+			href: "/protected/notes",
 			icon: <IconNotes className=" h-5 w-5 flex-shrink-0" />,
 		},
 		{
@@ -37,6 +44,14 @@ export function MainSidebar() {
 		},
 	];
 	const [open, setOpen] = useState(false);
+	const pathname = usePathname();
+	console.log(pathname);
+	const isOnRoute = (route: string) => {
+		if (route === "/protected") {
+			return pathname === route;
+		}
+		return pathname.includes(route);
+	};
 	return (
 		<div className="relative h-[calc(100vh-64px)] z-40">
 			<Sidebar open={open} setOpen={setOpen} animate={true}>
@@ -47,7 +62,15 @@ export function MainSidebar() {
 						</>
 						<div className="mt-8 flex flex-col gap-2">
 							{links.map((link, idx) => (
-								<SidebarLink key={idx} link={link} />
+								<SidebarLink
+									key={idx}
+									link={link}
+									className={
+										isOnRoute(link.href)
+											? "text-primary-500"
+											: undefined
+									}
+								/>
 							))}
 						</div>
 					</div>
