@@ -9,8 +9,8 @@ export function CreateNewDiaryEntryButton() {
 	const onCreateDiaryEntry = async () => {
 		// TODO: try catch
 		setIsCreating(true);
-		const newNote = await createDiaryEntry("", "");
-		router.push(`/protected/diary-entries/edit/${newNote.id}`);
+		const diaryEntry = await createDiaryEntry("", "");
+		router.push(`/protected/diary-entries/edit/${diaryEntry.id}`);
 	};
 	const [isCreating, setIsCreating] = useState(false);
 	return (

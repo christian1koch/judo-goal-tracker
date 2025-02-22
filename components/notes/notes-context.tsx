@@ -1,38 +1,34 @@
 "use client";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface CurrentNoteContextType {
+interface NotesContextType {
 	currentNoteTitle: string;
 	onCurrentNoteTitleUpdate: (newTitle: string) => void;
 }
-const CurrentNoteContext = createContext<CurrentNoteContextType | null>(null);
+const NotesContext = createContext<NotesContextType | null>(null);
 
 export const useCurrentNoteContext = () => {
-	const currentUserContext = useContext(CurrentNoteContext);
+	const notesContext = useContext(NotesContext);
 
-	if (!currentUserContext) {
+	if (!notesContext) {
 		throw new Error(
 			"useCurrentNote has to be used within <CurrentUserContext.Provider>"
 		);
 	}
 
-	return currentUserContext;
+	return notesContext;
 };
 
-export function CurrentNoteContextProvider({
-	children,
-}: {
-	children: ReactNode;
-}) {
+export function NotesProvider({ children }: { children: ReactNode }) {
 	const [currentNoteTitle, setCurrentNoteTitle] = useState<string>("");
 	return (
-		<CurrentNoteContext.Provider
+		<NotesContext.Provider
 			value={{
 				currentNoteTitle: currentNoteTitle,
 				onCurrentNoteTitleUpdate: setCurrentNoteTitle,
 			}}
 		>
 			{children}
-		</CurrentNoteContext.Provider>
+		</NotesContext.Provider>
 	);
 }

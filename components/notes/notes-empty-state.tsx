@@ -1,5 +1,6 @@
 import { Button } from "@heroui/react";
 import { IconCirclePlusFilled, IconNotes } from "@tabler/icons-react";
+import { AddNewNotesButton } from "./add-new-note";
 
 interface NotesEmptyState {
 	title?: string;
@@ -14,13 +15,7 @@ export function NotesEmptyState({ title, description }: NotesEmptyState) {
 				{description ||
 					"Create a new note to save all your judo knowledge!"}
 			</p>
-			<Button
-				className="mt-2"
-				startContent={<IconCirclePlusFilled />}
-				color="primary"
-			>
-				New note
-			</Button>
+			<AddNewNotesButton />
 		</div>
 	);
 }

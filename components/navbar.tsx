@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { MobileNotesSidebar, useParamsId } from "./notes/sidebars";
 import { getAllNotes } from "@/app/actions";
 import { INote } from "@/types";
+import { AddNewNotesButton } from "./notes/add-new-note";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -79,7 +80,7 @@ export function Navbar() {
 			};
 			fetchNotes();
 		}
-	}, [currentRoute]);
+	}, [currentRoute, id]);
 
 	const getNavbarItems = () => {
 		if (currentRoute === editNoteRoute) {
@@ -104,12 +105,7 @@ export function Navbar() {
 				<div className="flex flex-col w-full items-center">
 					{id != null && (
 						<div className="flex gap-2 w-full md:justify-start justify-between">
-							<Button
-								startContent={<IconCirclePlusFilled />}
-								color="primary"
-							>
-								New note
-							</Button>
+							<AddNewNotesButton />
 							<Button
 								startContent={<IconSquareRoundedXFilled />}
 								variant="light"

@@ -471,3 +471,17 @@ export const updateNoteContent = async (id: number, content: string) => {
 
 	return note;
 };
+
+export const createNewNote = async () => {
+	const supabase = await createClient();
+	const userId = await getUserFromSession(supabase);
+	const { data, error } = await supabase
+		.from("notes")
+		.insert({ user_id: userId, title: "New Note" })
+		.select();
+	if (error) {
+		throw new Error(error.message);
+	}
+	revalidatePath("/protected");
+	return data[0];
+};
