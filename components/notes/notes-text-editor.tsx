@@ -3,7 +3,7 @@ import { Input } from "@heroui/react";
 import TextEditor from "../text-editor";
 import { INote } from "@/types";
 import { updateNoteContent, updateNoteTitle } from "@/app/actions";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useCurrentNoteContext } from "./notes-context";
 
