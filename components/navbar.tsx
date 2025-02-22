@@ -17,8 +17,12 @@ import {
 	IconMenu2,
 	IconSquareRoundedXFilled,
 } from "@tabler/icons-react";
-import { useEffect } from "react";
-import { MobileNotesSidebar } from "./notes/notes-sidebar";
+import { useEffect, useState } from "react";
+import { MobileNotesSidebar } from "./notes/sidebars";
+import { getAllNotes } from "@/app/actions";
+import { INote } from "@/types";
+
+// import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
 const diaryEntriesRoute = "diary-entries";
 const goalsRoute = "goals";
@@ -32,6 +36,8 @@ const notesTitle = "Notes";
 
 export function Navbar() {
 	const pathname = usePathname();
+	const [notes, setNotes] = useState<INote[]>([]);
+
 	const getCurrentRoute = () => {
 		if (pathname.includes(editNoteRoute)) {
 			return editNoteRoute;
@@ -63,6 +69,17 @@ export function Navbar() {
 		}
 		return null;
 	};
+
+	useEffect(() => {
+		if (currentRoute === notesRoute) {
+			const fetchNotes = async () => {
+				const newNotes = await getAllNotes();
+				setNotes(newNotes);
+			};
+			fetchNotes();
+		}
+	}, [currentRoute]);
+
 	const getNavbarItems = () => {
 		if (currentRoute === editNoteRoute) {
 			return <Button color="danger">TODO: DELETE NOTE</Button>;
@@ -96,7 +113,7 @@ export function Navbar() {
 							Delete
 						</Button>
 					</div>
-					<MobileNotesSidebar />
+					<MobileNotesSidebar notes={notes} />
 				</div>
 			);
 		}

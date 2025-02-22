@@ -419,3 +419,55 @@ export const getDiaryEntryWithRelations = async () => {
 	const typedDiaryEntries: IDiaryEntryWithInfo[] = transformedDiaryEntries;
 	return typedDiaryEntries;
 };
+
+export const getAllNotes = async () => {
+	const supabase = await createClient();
+
+	const { data: note, error } = await supabase.from("notes").select();
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};
+
+export const getNoteById = async (id: number) => {
+	const supabase = await createClient();
+
+	const { data: note, error } = await supabase
+		.from("notes")
+		.select()
+		.eq("id", id);
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};
+
+export const updateNoteTitle = async (id: number, title: string) => {
+	const supabase = await createClient();
+
+	const { data: note, error } = await supabase
+		.from("notes")
+		.update({ title })
+		.eq("id", id);
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};
+export const updateNoteContent = async (id: number, content: string) => {
+	const supabase = await createClient();
+
+	const { data: note, error } = await supabase
+		.from("notes")
+		.update({ text: content })
+		.eq("id", id);
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return note;
+};

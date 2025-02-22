@@ -1,21 +1,13 @@
-"use client";
-import { DesktopNotesSidebar } from "@/components/notes/notes-sidebar";
-import TextEditor from "@/components/text-editor";
-import { Input } from "@heroui/react";
+import { NotesSidebar } from "@/components/notes/notes-sidebar";
+import { NotesTextEditor } from "@/components/notes/notes-text-editor";
 
 export default function NotesPage() {
 	return (
 		<>
 			<div className="flex flex-col justify-start items-start flex-1 mr-8 md:mr-72">
-				<Input
-					defaultValue="Note Title"
-					label="Title"
-					className="m-auto mt-5 w-auto flex-grow-0"
-					variant="bordered"
-				/>
-				<TextEditor />
+				<NotesTextEditor />
 			</div>
-			<DesktopNotesSidebar />
+			<NotesSidebar />
 		</>
 	);
 }

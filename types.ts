@@ -9,6 +9,8 @@ export type IDiaryAnswer = Database["public"]["Tables"]["diary_answers"]["Row"];
 
 export type IDiaryEntry = Database["public"]["Tables"]["diary_entry"]["Row"];
 
+export type INote = Database["public"]["Tables"]["notes"]["Row"];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PartialWithId<T> = Partial<T> & { id: any };
 
