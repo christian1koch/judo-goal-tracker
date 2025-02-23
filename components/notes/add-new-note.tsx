@@ -5,7 +5,7 @@ import { IconCirclePlusFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function AddNewNotesButton() {
+export function AddNewNotesButton({ className }: { className?: string }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const handleOnClick = async () => {
@@ -22,6 +22,7 @@ export function AddNewNotesButton() {
 	return (
 		<Button
 			startContent={<IconCirclePlusFilled />}
+			className={className}
 			color="primary"
 			isLoading={isLoading}
 			isDisabled={isLoading}
