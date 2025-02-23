@@ -3,6 +3,7 @@
 import { createNewGoal } from "@/app/actions";
 import { GoalModal } from "./goal-modal";
 import { Button, useDisclosure } from "@heroui/react";
+import { IconCirclePlusFilled } from "@tabler/icons-react";
 
 interface AddNewGoalModal {
 	isDeleteButtonShown?: boolean;
@@ -18,8 +19,13 @@ export default function AddNewGoalModal() {
 
 	return (
 		<>
-			<Button onPress={onOpen} variant="bordered" color="primary">
-				Create a new goal
+			<Button
+				onPress={onOpen}
+				variant="bordered"
+				color="primary"
+				startContent={<IconCirclePlusFilled />}
+			>
+				New goal
 			</Button>
 			{isOpen && (
 				<GoalModal

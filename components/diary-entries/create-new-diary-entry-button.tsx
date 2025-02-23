@@ -1,6 +1,7 @@
 "use client";
 import { createDiaryEntry } from "@/app/actions";
 import { Button } from "@heroui/react";
+import { IconCirclePlusFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -19,8 +20,9 @@ export function CreateNewDiaryEntryButton() {
 			variant="bordered"
 			onPress={onCreateDiaryEntry}
 			isDisabled={isCreating}
+			startContent={<IconCirclePlusFilled />}
 		>
-			Create New Diary Entry
+			New diary entry
 		</Button>
 	);
 }
