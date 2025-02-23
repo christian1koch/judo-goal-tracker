@@ -3,6 +3,8 @@ import { NotesContextSetter } from "@/components/notes/notes-context";
 import { NotesEmptyState } from "@/components/notes/notes-empty-state";
 import { NotesTextEditor } from "@/components/notes/notes-text-editor";
 import { DesktopNotesSidebar } from "@/components/notes/sidebars";
+import { cn } from "@/lib/utils";
+import { ComponentProps } from "react";
 
 export default async function NotesPage({
 	params,
@@ -17,9 +19,9 @@ export default async function NotesPage({
 
 	if (noNotes) {
 		return (
-			<div className="flex flex-col justify-start items-start flex-1 p-4">
+			<EditorWrapper className="md:mr-0">
 				<NotesEmptyState />
-			</div>
+			</EditorWrapper>
 		);
 	}
 	// Different empty state, this means that we selected the main view
@@ -28,12 +30,12 @@ export default async function NotesPage({
 		return (
 			<>
 				<NotesContextSetter notes={notes} />
-				<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-64">
+				<EditorWrapper>
 					<NotesEmptyState
 						title="Notes!"
 						description="Create or select a new note to improve your judo knowledge!"
 					/>
-				</div>
+				</EditorWrapper>
 				<DesktopNotesSidebar notes={notes} />
 			</>
 		);
@@ -47,10 +49,23 @@ export default async function NotesPage({
 	return (
 		<>
 			<NotesContextSetter notes={notes} />
-			<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-60">
+			<EditorWrapper>
 				<NotesTextEditor note={selectedNote} />
-			</div>
+			</EditorWrapper>
 			<DesktopNotesSidebar notes={notes} />
 		</>
 	);
 }
+
+const EditorWrapper = (props: ComponentProps<"div">) => {
+	return (
+		<div
+			className={cn(
+				"flex flex-col justify-start items-start flex-1 p-4 md:mr-60",
+				props.className
+			)}
+		>
+			{props.children}
+		</div>
+	);
+};

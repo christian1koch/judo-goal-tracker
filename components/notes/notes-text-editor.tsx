@@ -39,7 +39,7 @@ export function NotesTextEditor({ note }: NoteTextEditorProps) {
 			<Input
 				defaultValue={title}
 				label="Title"
-				className="m-auto mt-5 w-auto flex-grow-0"
+				className="m-auto mb-4 w-auto flex-grow-0"
 				onChange={(e) => setTitle(e.target.value)}
 				variant="bordered"
 				onKeyUp={(e) => {
