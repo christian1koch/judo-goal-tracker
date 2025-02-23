@@ -15,14 +15,18 @@ export default async function NotesPage({
 	const generalPage = id == null;
 
 	if (noNotes) {
-		return <NotesEmptyState />;
+		return (
+			<div className="flex flex-col justify-start items-start flex-1 p-4">
+				<NotesEmptyState />
+			</div>
+		);
 	}
 	// Different empty state, this means that we selected the main view
 	// probably like a callout for selecting one Note from the side or create a new
 	if (generalPage) {
 		return (
 			<>
-				<div className="flex flex-col justify-start items-start flex-1 mr-8 md:mr-72">
+				<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
 					<NotesEmptyState
 						title="Notes!"
 						description="Create or select a new note to improve your judo knowledge!"
@@ -40,7 +44,7 @@ export default async function NotesPage({
 	}
 	return (
 		<>
-			<div className="flex flex-col justify-start items-start flex-1 mr-8 md:mr-72">
+			<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
 				<NotesTextEditor note={selectedNote} />
 			</div>
 			<DesktopNotesSidebar notes={notes} />
