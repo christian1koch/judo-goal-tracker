@@ -27,6 +27,7 @@ export default async function NotesPage({
 	if (generalPage) {
 		return (
 			<>
+				<NotesContextSetter notes={notes} />
 				<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
 					<NotesEmptyState
 						title="Notes!"

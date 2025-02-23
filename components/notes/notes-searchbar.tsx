@@ -23,14 +23,14 @@ export function NotesSearchbar() {
 			>
 				Search Note
 			</Button>
-			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+			<Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
 				<ModalContent className="cmdk-styles">
 					<Command label="Command Menu">
-						<Command.Input />
+						<Command.Input placeholder="Search for a note..." />
 						<Command.List>
 							<Command.Empty>No results found.</Command.Empty>
 
-							<Command.Group heading="Notes">
+							<Command.Group>
 								{notes.map((note) => (
 									<Command.Item
 										key={note.id}
