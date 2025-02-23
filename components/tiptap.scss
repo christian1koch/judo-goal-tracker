@@ -94,6 +94,9 @@
 		border-top: 1px solid hsl(var(--heroui-primary-500));
 		margin: 2rem 0;
 	}
+	a {
+		color: hsl(var(--heroui-primary-500));
+	}
 }
 
 .react-horizontal-scrolling-menu--inner-wrapper {

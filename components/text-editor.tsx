@@ -30,6 +30,7 @@ import {
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "react-horizontal-scrolling-menu/dist/styles.css";
 import { cn } from "@/lib/utils";
+import Link from "@tiptap/extension-link";
 
 interface TextEditorProps {
 	content?: string;
@@ -406,6 +407,9 @@ const extensions = [
 		},
 	}),
 	Underline,
+	Link.configure({
+		autolink: true,
+	}),
 ];
 
 const placeholderContent = `
