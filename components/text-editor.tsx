@@ -38,6 +38,7 @@ export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 		extensions,
 		content: content || placeholderContent,
 		onUpdate,
+		autofocus: true,
 	});
 	if (!editor) {
 		return null;
@@ -64,10 +65,15 @@ export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 
 function ScrollableOptionsList({ editor }: { editor: Editor }) {
 	return (
-		<>
+		<ScrollMenu
+			wrapperClassName="bg-background rounded-xl"
+			LeftArrow={LeftArrow}
+			RightArrow={RightArrow}
+			onScroll={() => editor.chain().focus()}
+		>
 			<OptionsButton
 				id="bold"
-				onClick={() => editor.chain().focus().toggleBold().run()}
+				onPress={() => editor.chain().focus().toggleBold().run()}
 				isDisabled={!editor.can().chain().focus().toggleBold().run()}
 				className={editor.isActive("bold") ? "is-active" : ""}
 				isIconOnly
@@ -76,7 +82,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			</OptionsButton>
 			<OptionsButton
 				id="italic"
-				onClick={() => editor.chain().focus().toggleItalic().run()}
+				onPress={() => editor.chain().focus().toggleItalic().run()}
 				isDisabled={!editor.can().chain().focus().toggleItalic().run()}
 				className={editor.isActive("italic") ? "is-active" : ""}
 				isIconOnly
@@ -85,7 +91,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			</OptionsButton>
 			<OptionsButton
 				id="strikethrough"
-				onClick={() => editor.chain().focus().toggleStrike().run()}
+				onPress={() => editor.chain().focus().toggleStrike().run()}
 				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
 				className={editor.isActive("strike") ? "is-active" : ""}
 				isIconOnly
@@ -94,7 +100,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			</OptionsButton>
 			<OptionsButton
 				id="code"
-				onClick={() => editor.chain().focus().toggleCode().run()}
+				onPress={() => editor.chain().focus().toggleCode().run()}
 				isDisabled={!editor.can().chain().focus().toggleCode().run()}
 				className={editor.isActive("code") ? "is-active" : ""}
 				isIconOnly
@@ -104,7 +110,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			<OptionsButton
 				id="list"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleBulletList().run()}
+				onPress={() => editor.chain().focus().toggleBulletList().run()}
 				className={editor.isActive("bulletList") ? "is-active" : ""}
 			>
 				<IconList />
@@ -112,7 +118,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			<OptionsButton
 				id="numbers"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleOrderedList().run()}
+				onPress={() => editor.chain().focus().toggleOrderedList().run()}
 				className={editor.isActive("orderedList") ? "is-active" : ""}
 			>
 				<IconListNumbers />
@@ -120,7 +126,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			<OptionsButton
 				id="quote"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleBlockquote().run()}
+				onPress={() => editor.chain().focus().toggleBlockquote().run()}
 				className={editor.isActive("blockquote") ? "is-active" : ""}
 			>
 				<IconQuote />
@@ -128,20 +134,20 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			<OptionsButton
 				id="separator"
 				isIconOnly
-				onClick={() => editor.chain().focus().setHorizontalRule().run()}
+				onPress={() => editor.chain().focus().setHorizontalRule().run()}
 			>
 				<IconSeparator />
 			</OptionsButton>
 			<OptionsButton
 				id="normal-text"
-				onClick={() => editor.chain().focus().setParagraph().run()}
+				onPress={() => editor.chain().focus().setParagraph().run()}
 				className={editor.isActive("paragraph") ? "is-active" : ""}
 			>
 				Normal Text
 			</OptionsButton>
 			<OptionsButton
 				id="big-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 1 }).run()
 				}
 				className={
@@ -152,7 +158,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			</OptionsButton>
 			<OptionsButton
 				id="medium-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 2 }).run()
 				}
 				className={
@@ -163,7 +169,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			</OptionsButton>
 			<OptionsButton
 				id="small-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 3 }).run()
 				}
 				className={
@@ -172,7 +178,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			>
 				Small Title
 			</OptionsButton>
-		</>
+		</ScrollMenu>
 	);
 }
 
@@ -182,7 +188,7 @@ const LeftArrow = () => {
 	return (
 		<Button
 			isDisabled={isFirstItemVisible}
-			onClick={() => visibility.scrollPrev()}
+			onPress={() => visibility.scrollPrev()}
 			className="left"
 			size="sm"
 			isIconOnly
@@ -198,7 +204,7 @@ const RightArrow = () => {
 	return (
 		<Button
 			isDisabled={isLastItemVisible}
-			onClick={() => visibility.scrollNext()}
+			onPress={() => visibility.scrollNext()}
 			className="right"
 			size="sm"
 			isIconOnly
@@ -224,7 +230,7 @@ function OptionsList({
 		>
 			<OptionsButton
 				id="bold"
-				onClick={() => editor.chain().focus().toggleBold().run()}
+				onPress={() => editor.chain().focus().toggleBold().run()}
 				isDisabled={!editor.can().chain().focus().toggleBold().run()}
 				className={editor.isActive("bold") ? "is-active" : ""}
 				isIconOnly
@@ -233,7 +239,7 @@ function OptionsList({
 			</OptionsButton>
 			<OptionsButton
 				id="italic"
-				onClick={() => editor.chain().focus().toggleItalic().run()}
+				onPress={() => editor.chain().focus().toggleItalic().run()}
 				isDisabled={!editor.can().chain().focus().toggleItalic().run()}
 				className={editor.isActive("italic") ? "is-active" : ""}
 				isIconOnly
@@ -242,7 +248,7 @@ function OptionsList({
 			</OptionsButton>
 			<OptionsButton
 				id="strikethrough"
-				onClick={() => editor.chain().focus().toggleStrike().run()}
+				onPress={() => editor.chain().focus().toggleStrike().run()}
 				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
 				className={editor.isActive("strike") ? "is-active" : ""}
 				isIconOnly
@@ -251,7 +257,7 @@ function OptionsList({
 			</OptionsButton>
 			<OptionsButton
 				id="code"
-				onClick={() => editor.chain().focus().toggleCode().run()}
+				onPress={() => editor.chain().focus().toggleCode().run()}
 				isDisabled={!editor.can().chain().focus().toggleCode().run()}
 				className={editor.isActive("code") ? "is-active" : ""}
 				isIconOnly
@@ -261,7 +267,7 @@ function OptionsList({
 			<OptionsButton
 				id="list"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleBulletList().run()}
+				onPress={() => editor.chain().focus().toggleBulletList().run()}
 				className={editor.isActive("bulletList") ? "is-active" : ""}
 			>
 				<IconList />
@@ -269,7 +275,7 @@ function OptionsList({
 			<OptionsButton
 				id="numbers"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleOrderedList().run()}
+				onPress={() => editor.chain().focus().toggleOrderedList().run()}
 				className={editor.isActive("orderedList") ? "is-active" : ""}
 			>
 				<IconListNumbers />
@@ -277,7 +283,7 @@ function OptionsList({
 			<OptionsButton
 				id="quote"
 				isIconOnly
-				onClick={() => editor.chain().focus().toggleBlockquote().run()}
+				onPress={() => editor.chain().focus().toggleBlockquote().run()}
 				className={editor.isActive("blockquote") ? "is-active" : ""}
 			>
 				<IconQuote />
@@ -285,20 +291,20 @@ function OptionsList({
 			<OptionsButton
 				id="separator"
 				isIconOnly
-				onClick={() => editor.chain().focus().setHorizontalRule().run()}
+				onPress={() => editor.chain().focus().setHorizontalRule().run()}
 			>
 				<IconSeparator />
 			</OptionsButton>
 			<OptionsButton
 				id="normal-text"
-				onClick={() => editor.chain().focus().setParagraph().run()}
+				onPress={() => editor.chain().focus().setParagraph().run()}
 				className={editor.isActive("paragraph") ? "is-active" : ""}
 			>
 				Normal Text
 			</OptionsButton>
 			<OptionsButton
 				id="big-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 1 }).run()
 				}
 				className={
@@ -309,7 +315,7 @@ function OptionsList({
 			</OptionsButton>
 			<OptionsButton
 				id="medium-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 2 }).run()
 				}
 				className={
@@ -320,7 +326,7 @@ function OptionsList({
 			</OptionsButton>
 			<OptionsButton
 				id="small-title"
-				onClick={() =>
+				onPress={() =>
 					editor.chain().focus().toggleHeading({ level: 3 }).run()
 				}
 				className={
@@ -381,17 +387,9 @@ const placeholderContent = `
 
 type OptionsButtonProps = ComponentProps<typeof Button>;
 
-const OptionsButton = ({ children, onClick, ...props }: OptionsButtonProps) => {
+const OptionsButton = ({ children, ...props }: OptionsButtonProps) => {
 	return (
-		<Button
-			onClick={(e) => {
-				e.preventDefault();
-				onClick?.(e);
-			}}
-			size="sm"
-			variant="ghost"
-			{...props}
-		>
+		<Button size="sm" variant="ghost" {...props}>
 			{children}
 		</Button>
 	);
