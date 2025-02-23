@@ -68,6 +68,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			wrapperClassName="bg-background rounded-xl"
 			LeftArrow={LeftArrow}
 			RightArrow={RightArrow}
+			onScroll={(_, e) => e.preventDefault()}
 		>
 			<OptionsButton
 				id="bold"
@@ -385,9 +386,17 @@ const placeholderContent = `
 
 type OptionsButtonProps = ComponentProps<typeof Button>;
 
-const OptionsButton = ({ children, ...props }: OptionsButtonProps) => {
+const OptionsButton = ({ children, onClick, ...props }: OptionsButtonProps) => {
 	return (
-		<Button size="sm" variant="ghost" {...props}>
+		<Button
+			onClick={(e) => {
+				e.preventDefault();
+				onClick?.(e);
+			}}
+			size="sm"
+			variant="ghost"
+			{...props}
+		>
 			{children}
 		</Button>
 	);
