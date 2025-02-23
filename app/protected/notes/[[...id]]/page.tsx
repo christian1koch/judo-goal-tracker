@@ -1,4 +1,5 @@
 import { getAllNotes } from "@/app/actions";
+import { NotesContextSetter } from "@/components/notes/notes-context";
 import { NotesEmptyState } from "@/components/notes/notes-empty-state";
 import { NotesTextEditor } from "@/components/notes/notes-text-editor";
 import { DesktopNotesSidebar } from "@/components/notes/sidebars";
@@ -44,6 +45,7 @@ export default async function NotesPage({
 	}
 	return (
 		<>
+			<NotesContextSetter notes={notes} />
 			<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
 				<NotesTextEditor note={selectedNote} />
 			</div>

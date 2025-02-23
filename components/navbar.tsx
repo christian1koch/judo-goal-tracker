@@ -20,6 +20,7 @@ import { INote } from "@/types";
 import { AddNewNotesButton } from "./notes/add-new-note";
 import { DeleteNoteButton } from "./notes/delete-note-button";
 import { DeleteDiaryEntryButton } from "./diary-entries/delete-diary-entry-button";
+import { NotesSearchbar } from "./notes/notes-searchbar";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -102,12 +103,15 @@ export function Navbar() {
 			}
 			return (
 				<div className="flex flex-col w-full items-center">
-					{id != null && (
-						<div className="flex gap-2 w-full md:justify-start justify-between">
-							<AddNewNotesButton />
-							<DeleteNoteButton id={id} />
-						</div>
-					)}
+					<div className="flex gap-2 w-full md:justify-start justify-between">
+						{id != null && (
+							<>
+								<NotesSearchbar />
+								<AddNewNotesButton />
+								<DeleteNoteButton id={id} />
+							</>
+						)}
+					</div>
 					<MobileNotesSidebar notes={notes} />
 				</div>
 			);

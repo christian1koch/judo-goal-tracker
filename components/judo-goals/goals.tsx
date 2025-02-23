@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 
 import { GoalCard } from "./goal-card";
 import { GoalsContainer } from "./goals-container.tsx/goals-container";
+import { CommandMenu } from "../ui/cmdk";
 
 export default async function Goals() {
 	const supabase = await createClient();
@@ -11,6 +12,7 @@ export default async function Goals() {
 	}
 	return (
 		<GoalsContainer>
+			<CommandMenu />
 			{goals.map((goal) => (
 				<GoalCard
 					id={goal.id}

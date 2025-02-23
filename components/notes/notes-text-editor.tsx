@@ -5,13 +5,13 @@ import { INote } from "@/types";
 import { updateNoteContent, updateNoteTitle } from "@/app/actions";
 import { useLayoutEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { useCurrentNoteContext } from "./notes-context";
+import { useNotesContext } from "./notes-context";
 
 interface NoteTextEditorProps {
 	note: INote;
 }
 export function NotesTextEditor({ note }: NoteTextEditorProps) {
-	const { onCurrentNoteTitleUpdate } = useCurrentNoteContext();
+	const { onCurrentNoteTitleUpdate } = useNotesContext();
 	const [title, setTitle] = useState(note.title || "");
 	const onTitleUpdate = async () => {
 		try {

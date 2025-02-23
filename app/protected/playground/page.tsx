@@ -1,5 +1,9 @@
-import { NotesEmptyState } from "@/components/notes/notes-empty-state";
+import { CommandMenu } from "@/components/ui/cmdk";
 
 export default function PlaygroundPage() {
-	return <NotesEmptyState />;
+	return (
+		<div className="flex w-full h-full justify-centeritems-center">
+			<CommandMenu />
+		</div>
+	);
 }
