@@ -2,6 +2,7 @@ import { Button, ButtonGroup } from "@heroui/react";
 import "./tiptap.scss";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
+import Underline from "@tiptap/extension-underline";
 import TextStyle, { TextStyleOptions } from "@tiptap/extension-text-style";
 import {
 	BubbleMenu,
@@ -24,6 +25,7 @@ import {
 	IconQuote,
 	IconSeparator,
 	IconStrikethrough,
+	IconUnderline,
 } from "@tabler/icons-react";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "react-horizontal-scrolling-menu/dist/styles.css";
@@ -38,7 +40,6 @@ export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 		extensions,
 		content: content || placeholderContent,
 		onUpdate,
-		autofocus: true,
 	});
 	if (!editor) {
 		return null;
@@ -75,7 +76,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="bold"
 				onPress={() => editor.chain().focus().toggleBold().run()}
 				isDisabled={!editor.can().chain().focus().toggleBold().run()}
-				className={editor.isActive("bold") ? "is-active" : ""}
+				className={editor.isActive("bold") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconBold />
@@ -84,7 +85,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="italic"
 				onPress={() => editor.chain().focus().toggleItalic().run()}
 				isDisabled={!editor.can().chain().focus().toggleItalic().run()}
-				className={editor.isActive("italic") ? "is-active" : ""}
+				className={editor.isActive("italic") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconItalic />
@@ -93,16 +94,27 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="strikethrough"
 				onPress={() => editor.chain().focus().toggleStrike().run()}
 				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
-				className={editor.isActive("strike") ? "is-active" : ""}
+				className={editor.isActive("strike") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconStrikethrough />
 			</OptionsButton>
 			<OptionsButton
+				id="underline"
+				onPress={() => editor.chain().focus().toggleUnderline().run()}
+				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
+				className={
+					editor.isActive("underline") ? "text-primary-500" : ""
+				}
+				isIconOnly
+			>
+				<IconUnderline />
+			</OptionsButton>
+			<OptionsButton
 				id="code"
 				onPress={() => editor.chain().focus().toggleCode().run()}
 				isDisabled={!editor.can().chain().focus().toggleCode().run()}
-				className={editor.isActive("code") ? "is-active" : ""}
+				className={editor.isActive("code") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconCode />
@@ -111,7 +123,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="list"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleBulletList().run()}
-				className={editor.isActive("bulletList") ? "is-active" : ""}
+				className={
+					editor.isActive("bulletList") ? "text-primary-500" : ""
+				}
 			>
 				<IconList />
 			</OptionsButton>
@@ -119,7 +133,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="numbers"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleOrderedList().run()}
-				className={editor.isActive("orderedList") ? "is-active" : ""}
+				className={
+					editor.isActive("orderedList") ? "text-primary-500" : ""
+				}
 			>
 				<IconListNumbers />
 			</OptionsButton>
@@ -127,7 +143,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 				id="quote"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleBlockquote().run()}
-				className={editor.isActive("blockquote") ? "is-active" : ""}
+				className={
+					editor.isActive("blockquote") ? "text-primary-500" : ""
+				}
 			>
 				<IconQuote />
 			</OptionsButton>
@@ -141,7 +159,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			<OptionsButton
 				id="normal-text"
 				onPress={() => editor.chain().focus().setParagraph().run()}
-				className={editor.isActive("paragraph") ? "is-active" : ""}
+				className={
+					editor.isActive("paragraph") ? "text-primary-500" : ""
+				}
 			>
 				Normal Text
 			</OptionsButton>
@@ -151,7 +171,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 					editor.chain().focus().toggleHeading({ level: 1 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 1 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 1 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Big Title
@@ -162,7 +184,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 					editor.chain().focus().toggleHeading({ level: 2 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 2 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Medium Title
@@ -173,7 +197,9 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 					editor.chain().focus().toggleHeading({ level: 3 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 3 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Small Title
@@ -232,7 +258,7 @@ function OptionsList({
 				id="bold"
 				onPress={() => editor.chain().focus().toggleBold().run()}
 				isDisabled={!editor.can().chain().focus().toggleBold().run()}
-				className={editor.isActive("bold") ? "is-active" : ""}
+				className={editor.isActive("bold") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconBold />
@@ -241,7 +267,7 @@ function OptionsList({
 				id="italic"
 				onPress={() => editor.chain().focus().toggleItalic().run()}
 				isDisabled={!editor.can().chain().focus().toggleItalic().run()}
-				className={editor.isActive("italic") ? "is-active" : ""}
+				className={editor.isActive("italic") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconItalic />
@@ -250,16 +276,27 @@ function OptionsList({
 				id="strikethrough"
 				onPress={() => editor.chain().focus().toggleStrike().run()}
 				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
-				className={editor.isActive("strike") ? "is-active" : ""}
+				className={editor.isActive("strike") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconStrikethrough />
 			</OptionsButton>
 			<OptionsButton
+				id="underline"
+				onPress={() => editor.chain().focus().toggleUnderline().run()}
+				isDisabled={!editor.can().chain().focus().toggleStrike().run()}
+				className={
+					editor.isActive("underline") ? "text-primary-500" : ""
+				}
+				isIconOnly
+			>
+				<IconUnderline />
+			</OptionsButton>
+			<OptionsButton
 				id="code"
 				onPress={() => editor.chain().focus().toggleCode().run()}
 				isDisabled={!editor.can().chain().focus().toggleCode().run()}
-				className={editor.isActive("code") ? "is-active" : ""}
+				className={editor.isActive("code") ? "text-primary-500" : ""}
 				isIconOnly
 			>
 				<IconCode />
@@ -268,7 +305,9 @@ function OptionsList({
 				id="list"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleBulletList().run()}
-				className={editor.isActive("bulletList") ? "is-active" : ""}
+				className={
+					editor.isActive("bulletList") ? "text-primary-500" : ""
+				}
 			>
 				<IconList />
 			</OptionsButton>
@@ -276,7 +315,9 @@ function OptionsList({
 				id="numbers"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleOrderedList().run()}
-				className={editor.isActive("orderedList") ? "is-active" : ""}
+				className={
+					editor.isActive("orderedList") ? "text-primary-500" : ""
+				}
 			>
 				<IconListNumbers />
 			</OptionsButton>
@@ -284,7 +325,9 @@ function OptionsList({
 				id="quote"
 				isIconOnly
 				onPress={() => editor.chain().focus().toggleBlockquote().run()}
-				className={editor.isActive("blockquote") ? "is-active" : ""}
+				className={
+					editor.isActive("blockquote") ? "text-primary-500" : ""
+				}
 			>
 				<IconQuote />
 			</OptionsButton>
@@ -298,7 +341,9 @@ function OptionsList({
 			<OptionsButton
 				id="normal-text"
 				onPress={() => editor.chain().focus().setParagraph().run()}
-				className={editor.isActive("paragraph") ? "is-active" : ""}
+				className={
+					editor.isActive("paragraph") ? "text-primary-500" : ""
+				}
 			>
 				Normal Text
 			</OptionsButton>
@@ -308,7 +353,9 @@ function OptionsList({
 					editor.chain().focus().toggleHeading({ level: 1 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 1 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 1 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Big Title
@@ -319,7 +366,9 @@ function OptionsList({
 					editor.chain().focus().toggleHeading({ level: 2 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 2 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Medium Title
@@ -330,7 +379,9 @@ function OptionsList({
 					editor.chain().focus().toggleHeading({ level: 3 }).run()
 				}
 				className={
-					editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+					editor.isActive("heading", { level: 3 })
+						? "text-primary-500"
+						: ""
 				}
 			>
 				Small Title
@@ -354,6 +405,7 @@ const extensions = [
 			keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
 		},
 	}),
+	Underline,
 ];
 
 const placeholderContent = `
@@ -389,7 +441,13 @@ type OptionsButtonProps = ComponentProps<typeof Button>;
 
 const OptionsButton = ({ children, ...props }: OptionsButtonProps) => {
 	return (
-		<Button size="sm" variant="ghost" {...props}>
+		<Button
+			size="sm"
+			variant="ghost"
+			contentEditable={false}
+			onMouseDown={(e) => e.preventDefault()}
+			{...props}
+		>
 			{children}
 		</Button>
 	);
