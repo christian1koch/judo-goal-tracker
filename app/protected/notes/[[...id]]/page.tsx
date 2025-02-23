@@ -28,7 +28,7 @@ export default async function NotesPage({
 		return (
 			<>
 				<NotesContextSetter notes={notes} />
-				<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
+				<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-64">
 					<NotesEmptyState
 						title="Notes!"
 						description="Create or select a new note to improve your judo knowledge!"
@@ -47,7 +47,7 @@ export default async function NotesPage({
 	return (
 		<>
 			<NotesContextSetter notes={notes} />
-			<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-72">
+			<div className="flex flex-col justify-start items-start flex-1 p-4 md:mr-60">
 				<NotesTextEditor note={selectedNote} />
 			</div>
 			<DesktopNotesSidebar notes={notes} />
