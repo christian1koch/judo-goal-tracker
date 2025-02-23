@@ -64,12 +64,7 @@ export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 
 function ScrollableOptionsList({ editor }: { editor: Editor }) {
 	return (
-		<ScrollMenu
-			wrapperClassName="bg-background rounded-xl"
-			LeftArrow={LeftArrow}
-			RightArrow={RightArrow}
-			onScroll={(_, e) => e.preventDefault()}
-		>
+		<>
 			<OptionsButton
 				id="bold"
 				onClick={() => editor.chain().focus().toggleBold().run()}
@@ -177,7 +172,7 @@ function ScrollableOptionsList({ editor }: { editor: Editor }) {
 			>
 				Small Title
 			</OptionsButton>
-		</ScrollMenu>
+		</>
 	);
 }
 
