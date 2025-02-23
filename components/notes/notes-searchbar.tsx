@@ -1,10 +1,11 @@
-import { Button, Modal, ModalContent, useDisclosure } from "@heroui/react";
+import { Modal, ModalContent, useDisclosure } from "@heroui/react";
 import { Command } from "cmdk";
 import React from "react";
 import "../ui/cmdk.scss";
 import { IconSearch } from "@tabler/icons-react";
 import { useNotesContext } from "./notes-context";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/responsiveIconButton";
 
 export function NotesSearchbar() {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -20,6 +21,7 @@ export function NotesSearchbar() {
 				startContent={<IconSearch size={18} />}
 				variant="bordered"
 				onPress={onOpen}
+				shouldResponsiveShowIconOnly
 			>
 				Search Note
 			</Button>

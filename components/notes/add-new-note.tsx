@@ -1,11 +1,17 @@
 "use client";
 import { createNewNote } from "@/app/actions";
-import { Button } from "@heroui/react";
 import { IconCirclePlusFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "../ui/responsiveIconButton";
 
-export function AddNewNotesButton({ className }: { className?: string }) {
+export function AddNewNotesButton({
+	className,
+	shouldShowResponsiveIcon,
+}: {
+	className?: string;
+	shouldShowResponsiveIcon?: boolean;
+}) {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const handleOnClick = async () => {
@@ -27,6 +33,7 @@ export function AddNewNotesButton({ className }: { className?: string }) {
 			isLoading={isLoading}
 			isDisabled={isLoading}
 			onPress={handleOnClick}
+			shouldResponsiveShowIconOnly={shouldShowResponsiveIcon}
 		>
 			New note
 		</Button>

@@ -1,9 +1,9 @@
 "use client";
 import { deleteNote } from "@/app/actions";
-import { Button } from "@heroui/react";
 import { IconSquareRoundedXFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "../ui/responsiveIconButton";
 
 export function DeleteNoteButton({ id }: { id: number }) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -22,11 +22,12 @@ export function DeleteNoteButton({ id }: { id: number }) {
 	return (
 		<Button
 			startContent={<IconSquareRoundedXFilled />}
-			variant="light"
+			variant="bordered"
 			color="danger"
 			isLoading={isLoading}
 			isDisabled={isLoading}
 			onPress={handleOnClick}
+			shouldResponsiveShowIconOnly
 		>
 			Delete
 		</Button>

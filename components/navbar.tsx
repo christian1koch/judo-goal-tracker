@@ -103,11 +103,11 @@ export function Navbar() {
 			}
 			return (
 				<div className="flex flex-col w-full items-center">
-					<div className="flex gap-2 w-full md:justify-start justify-between">
+					<div className="flex gap-2 w-full md:justify-start justify-end">
 						<NotesSearchbar />
 						{id != null && (
 							<>
-								<AddNewNotesButton />
+								<AddNewNotesButton shouldShowResponsiveIcon />
 								<DeleteNoteButton id={id} />
 							</>
 						)}
