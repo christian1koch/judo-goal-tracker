@@ -505,3 +505,21 @@ export const deleteDiaryEntry = async (id: number) => {
 	}
 	revalidatePath("/protected");
 };
+
+export const uploadImageToSupabase = async (file: File) => {
+	const supabase = await createClient();
+	const filePath = `public/${Date.now()}_${file.name}`;
+	const { error } = await supabase.storage
+		.from("notes_images")
+		.upload(filePath, file);
+
+	if (error) {
+		console.error("Upload failed:", error);
+		return null;
+	}
+
+	const { data: publicUrlData } = supabase.storage
+		.from("notes_images")
+		.getPublicUrl(filePath);
+	return publicUrlData.publicUrl;
+};

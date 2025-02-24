@@ -3,6 +3,9 @@ import "./tiptap.scss";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import Underline from "@tiptap/extension-underline";
+import Image from "@tiptap/extension-image";
+import ImageResize from "tiptap-extension-resize-image";
+
 import TextStyle, { TextStyleOptions } from "@tiptap/extension-text-style";
 import {
 	BubbleMenu,
@@ -13,11 +16,19 @@ import {
 	useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { ComponentProps, useContext } from "react";
+import React, {
+	ChangeEvent,
+	ComponentProps,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+} from "react";
 import {
 	IconArrowLeft,
 	IconArrowRight,
 	IconBold,
+	IconCloudUp,
 	IconCode,
 	IconItalic,
 	IconList,
@@ -31,6 +42,7 @@ import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "react-horizontal-scrolling-menu/dist/styles.css";
 import { cn } from "@/lib/utils";
 import Link from "@tiptap/extension-link";
+import { uploadImageToSupabase } from "@/app/actions";
 
 interface TextEditorProps {
 	content?: string;
@@ -53,8 +65,7 @@ export default function TextEditor({ content, onUpdate }: TextEditorProps) {
 					<OptionsList editor={editor} />
 				</div>
 			</div>
-
-			<EditorContent className="p-4" editor={editor} />
+			<EditorContent className="p-4 h-full w-full" editor={editor} />
 			<BubbleMenu editor={editor} className="md:hidden">
 				<ScrollableOptionsList editor={editor} />
 			</BubbleMenu>
@@ -332,6 +343,7 @@ function OptionsList({
 			>
 				<IconQuote />
 			</OptionsButton>
+
 			<OptionsButton
 				id="separator"
 				isIconOnly
@@ -339,6 +351,7 @@ function OptionsList({
 			>
 				<IconSeparator />
 			</OptionsButton>
+			<ImageUploadButton editor={editor} />
 			<OptionsButton
 				id="normal-text"
 				onPress={() => editor.chain().focus().setParagraph().run()}
@@ -410,6 +423,10 @@ const extensions = [
 	Link.configure({
 		autolink: true,
 	}),
+	Image.configure({
+		inline: true,
+	}),
+	ImageResize,
 ];
 
 const placeholderContent = `
@@ -456,3 +473,114 @@ const OptionsButton = ({ children, ...props }: OptionsButtonProps) => {
 		</Button>
 	);
 };
+
+function ImageUploadButton({ editor }: { editor: Editor }) {
+	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	// Upload image to Supabase
+
+	// Handle file input change
+	const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files) {
+			const file = event.target.files[0];
+			if (file && editor) {
+				const imageUrl = await uploadImageToSupabase(file);
+				console.log(imageUrl);
+				if (imageUrl) {
+					editor
+						.chain()
+						.focus()
+						.setImage({ src: imageUrl })
+						.createParagraphNear()
+						.run();
+				}
+			}
+		}
+	};
+
+	// Trigger file input click
+	const handleUploadButtonClick = () => {
+		fileInputRef.current?.click();
+	};
+
+	// Handle paste event for images
+	const handlePaste = useCallback(
+		async (event: ClipboardEvent) => {
+			if (event.clipboardData) {
+				const items = event.clipboardData.items;
+				console.log(items);
+				const item = items[0];
+				if (item.type.indexOf("image") !== -1) {
+					const file = item.getAsFile();
+					if (file) {
+						editor
+							.chain()
+							.focus()
+							.insertContent("<p>--Uploading Image--</p>")
+							.run();
+						const imageUrl = await uploadImageToSupabase(file);
+						if (imageUrl && editor) {
+							editor
+								.chain()
+								.focus()
+								.deleteRange({
+									from:
+										editor.state.doc.content.size -
+										"--Uploading Image--".length -
+										2,
+									to: editor.state.doc.content.size,
+								})
+								.setImage({ src: imageUrl })
+								.createParagraphNear()
+								.run();
+						}
+					}
+				}
+			}
+		},
+		[editor]
+	);
+
+	useEffect(() => {
+		if (editor) {
+			const editorElement = editor.view.dom;
+			editorElement.addEventListener("paste", handlePaste);
+			editor.on("paste", ({ editor, event }) => {
+				if (event.clipboardData) {
+					const items = event.clipboardData.items;
+					const imageItem = Array.from(items).find(
+						(item) => item.type.indexOf("image") !== -1
+					);
+
+					if (imageItem) {
+						// Only trigger this if it's an image being pasted
+						setTimeout(() => {
+							editor.chain().focus().createParagraphNear().run(); // ✅ Forces newline after pasted image
+						}, 0); // Ensures the default paste happens before adding the newline
+					}
+				}
+			});
+			return () =>
+				editorElement.removeEventListener("paste", handlePaste);
+		}
+	}, [editor, handlePaste]);
+
+	return (
+		<>
+			<OptionsButton
+				id="file upload"
+				isIconOnly
+				onPress={handleUploadButtonClick}
+			>
+				<IconCloudUp />
+			</OptionsButton>
+			<input
+				ref={fileInputRef}
+				type="file"
+				accept="image/*"
+				onChange={handleFileChange}
+				className="hidden"
+			/>
+		</>
+	);
+}

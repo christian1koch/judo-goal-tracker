@@ -16,6 +16,7 @@
 		"@supabase/supabase-js": "latest",
 		"@tabler/icons-react": "^3.30.0",
 		"@tiptap/extension-color": "^2.11.5",
+		"@tiptap/extension-image": "^2.11.5",
 		"@tiptap/extension-link": "^2.11.5",
 		"@tiptap/extension-underline": "^2.11.5",
 		"@tiptap/pm": "^2.11.5",
@@ -36,6 +37,7 @@
 		"react-dom": "19.0.0",
 		"react-horizontal-scrolling-menu": "^8.2.0",
 		"sass": "^1.85.0",
+		"tiptap-extension-resize-image": "^1.2.1",
 		"use-debounce": "^10.0.4"
 	},
 	"devDependencies": {
