@@ -21,6 +21,7 @@ import { AddNewNotesButton } from "./notes/add-new-note";
 import { DeleteNoteButton } from "./notes/delete-note-button";
 import { DeleteDiaryEntryButton } from "./diary-entries/delete-diary-entry-button";
 import { NotesSearchbar } from "./notes/notes-searchbar";
+import { ThemeSwitcher } from "./theme-switcher";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -120,8 +121,22 @@ export function Navbar() {
 	};
 	return (
 		<>
-			<MobileNavbar title={getTitle()}>{getNavbarItems()}</MobileNavbar>
-			<DesktopNavbar title={getTitle()}>{getNavbarItems()}</DesktopNavbar>
+			<MobileNavbar title={getTitle()}>
+				{
+					<>
+						{getNavbarItems()}
+						<ThemeSwitcher />
+					</>
+				}
+			</MobileNavbar>
+			<DesktopNavbar title={getTitle()}>
+				{
+					<>
+						{getNavbarItems()}
+						<ThemeSwitcher />
+					</>
+				}
+			</DesktopNavbar>
 		</>
 	);
 }
