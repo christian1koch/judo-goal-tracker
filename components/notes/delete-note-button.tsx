@@ -22,7 +22,7 @@ export function DeleteNoteButton({ id }: { id: number }) {
 	return (
 		<Button
 			startContent={<IconSquareRoundedXFilled />}
-			variant="bordered"
+			variant="light"
 			color="danger"
 			isLoading={isLoading}
 			isDisabled={isLoading}

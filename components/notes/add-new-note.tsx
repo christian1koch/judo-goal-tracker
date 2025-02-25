@@ -29,10 +29,10 @@ export function AddNewNotesButton({
 		<Button
 			startContent={<IconCirclePlusFilled />}
 			className={className}
-			color="primary"
 			isLoading={isLoading}
 			isDisabled={isLoading}
 			onPress={handleOnClick}
+			variant="ghost"
 			shouldResponsiveShowIconOnly={shouldShowResponsiveIcon}
 		>
 			New note

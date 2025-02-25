@@ -422,7 +422,6 @@ export const getDiaryEntryWithRelations = async () => {
 
 export const getAllNotes = async () => {
 	const supabase = await createClient();
-
 	const { data: note, error } = await supabase.from("notes").select();
 	if (error) {
 		throw new Error(error.message);

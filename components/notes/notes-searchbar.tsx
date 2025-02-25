@@ -19,7 +19,7 @@ export function NotesSearchbar() {
 		<>
 			<Button
 				startContent={<IconSearch size={18} />}
-				variant="bordered"
+				variant="light"
 				onPress={onOpen}
 				shouldResponsiveShowIconOnly
 			>
