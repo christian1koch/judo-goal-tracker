@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@heroui/react";
+import { Input, Switch } from "@heroui/react";
 import TextEditor, { SuggestionOption } from "../ui/text-editor/text-editor";
 import { INote } from "@/types";
 import { updateNoteContent, updateNoteTitle } from "@/app/actions";
@@ -14,6 +14,7 @@ interface NoteTextEditorProps {
 export function NotesTextEditor({ note }: NoteTextEditorProps) {
 	const { onCurrentNoteTitleUpdate, notes } = useNotesContext();
 	const [title, setTitle] = useState(note.title || "");
+	const [isEditMode, setIsEditMode] = useState(true);
 	const onTitleUpdate = async () => {
 		try {
 			await updateNoteTitle(note.id, title);
@@ -70,25 +71,35 @@ export function NotesTextEditor({ note }: NoteTextEditorProps) {
 
 	return (
 		<>
-			<Input
-				defaultValue={title}
-				label="Title"
-				className="m-auto mb-4 w-auto flex-grow-0"
-				onChange={(e) => setTitle(e.target.value)}
-				variant="bordered"
-				onKeyUp={(e) => {
-					if (e.key === "Enter") {
-						onTitleUpdate();
-					}
-				}}
-				onBlur={onTitleUpdate}
-			/>
+			<div className="flex w-full justify-between items-center pb-4 gap-6">
+				{isEditMode ? (
+					<Input
+						defaultValue={title}
+						label="Title"
+						className=" justify-self-center self-center place-self-center"
+						onChange={(e) => setTitle(e.target.value)}
+						variant="bordered"
+						onKeyUp={(e) => {
+							if (e.key === "Enter") {
+								onTitleUpdate();
+							}
+						}}
+						onBlur={onTitleUpdate}
+					/>
+				) : (
+					<h2 className="font-medium">{title}</h2>
+				)}
+				<Switch defaultSelected onValueChange={setIsEditMode}>
+					Edit
+				</Switch>
+			</div>
 			<TextEditor
 				content={note.text || ""}
 				onUpdate={({ editor }) =>
 					updateContentDebounced(editor.getHTML())
 				}
 				suggestionsList={notesToSuggestionOption()}
+				editable={isEditMode}
 			/>
 		</>
 	);

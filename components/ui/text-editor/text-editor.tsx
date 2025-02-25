@@ -25,10 +25,13 @@ import {
 
 import { SlashCmd } from "@harshtalks/slash-tiptap";
 import { OptionsList } from "./options-list";
+import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 interface TextEditorProps {
 	content?: string;
 	onUpdate?: (props: EditorEvents["update"]) => void;
 	suggestionsList: SuggestionOption[];
+	editable: boolean;
 }
 
 export type SuggestionOption = {
@@ -42,10 +45,11 @@ export default function TextEditor({
 	content,
 	onUpdate,
 	suggestionsList,
+	editable,
 }: TextEditorProps) {
 	const editor = useEditor({
 		extensions,
-		content: content || placeholderContent,
+		content: content,
 		onUpdate,
 		editorProps: {
 			handleDOMEvents: {
@@ -53,24 +57,35 @@ export default function TextEditor({
 			},
 		},
 	});
+	useEffect(() => {
+		editor?.setEditable(editable);
+	}, [editable, editor]);
+
 	if (!editor) {
 		return null;
 	}
 
 	return (
 		<SlashCmdProvider>
-			<div className="flex flex-col gap-4 bg-default-50 border rounded-md flex-1 w-full">
+			<div
+				className={cn(
+					"flex flex-col gap-4 border rounded-md flex-1 w-full",
+					editable ? "bg-default-50" : "bg-background"
+				)}
+			>
 				<div className="flex sticky top-16 z-10 w-full">
-					<div className="md:flex w-full hidden">
-						<OptionsList editor={editor} />
-					</div>
+					{editable && (
+						<div className="md:flex w-full hidden">
+							<OptionsList editor={editor} />
+						</div>
+					)}
 				</div>
 				<EditorContent className="p-4 h-full w-full" editor={editor} />
 				<SlashCmd.Root editor={editor}>
 					<SlashCmd.Cmd>
 						<SlashCmd.Empty>No commands available</SlashCmd.Empty>
 						<SlashCmd.List>
-							<div className="  bg-background z-10 py-2 px-4 flex flex-col rounded-md max-h-52 overflow-auto">
+							<div className="bg-background z-10 py-2 px-4 flex flex-col rounded-md max-h-52 overflow-auto">
 								{suggestionsList.map((item, i) => {
 									return (
 										<SlashCmd.Item
@@ -152,32 +167,3 @@ const extensions = [
 		},
 	}),
 ];
-
-const placeholderContent = `
-<h2>
-  Hajime!
-</h2>
-<p>
-  This is a <em>fundamental</em> example of <strong>JudoApp Notes</strong>. Just like in Judo, where technique and discipline matter, this app provides you with structured and flexible note-taking. Let’s explore some moves:
-</p>
-<ul>
-  <li>
-    Here’s your first grip on organizing thoughts …
-  </li>
-  <li>
-    … and a second one to secure your ideas.
-  </li>
-</ul>
-<p>
-  Feeling the flow? Now, let’s execute a strong technique—how about a code block:
-</p>
-<pre><code class="language-js">console.log("JudoApp Notes - Master your thoughts!");</code></pre>
-<p>
-  Just like in Judo, practice makes perfect. Keep refining your notes and stay sharp.
-</p>
-<blockquote>
-  "A black belt is just a white belt who never gave up." 🥋
-  <br />
-  — Fumi sensei
-</blockquote>
-`;
