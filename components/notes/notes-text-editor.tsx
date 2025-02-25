@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@heroui/react";
-import TextEditor from "../text-editor";
+import TextEditor from "../ui/text-editor/text-editor";
 import { INote } from "@/types";
 import { updateNoteContent, updateNoteTitle } from "@/app/actions";
 import { useLayoutEffect, useState } from "react";
