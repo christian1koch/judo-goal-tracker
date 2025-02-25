@@ -109,7 +109,7 @@ function OptionsList({
 	return (
 		<ButtonGroup
 			className={cn(
-				"flex flex-wrap gap-1 border-b p-4 bg-black rounded-md z-10 w-full",
+				"flex flex-wrap gap-1 border-b p-4 bg-background rounded-md z-10 w-full",
 				className
 			)}
 		>
