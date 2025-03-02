@@ -445,7 +445,7 @@ export const updateNoteTitle = async (id: number, title: string) => {
 	if (error) {
 		throw new Error(error.message);
 	}
-
+	revalidatePath("/protected");
 	return note;
 };
 export const updateNoteContent = async (id: number, content: string) => {
