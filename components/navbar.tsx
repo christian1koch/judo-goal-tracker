@@ -13,15 +13,14 @@ import {
 	useDisclosure,
 } from "@heroui/react";
 import { IconMenu2 } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MobileNotesSidebar, useParamsId } from "./notes/sidebars";
-import { getAllNotes } from "@/app/actions";
-import { INote } from "@/types";
 import { AddNewNotesButton } from "./notes/add-new-note";
 import { DeleteNoteButton } from "./notes/delete-note-button";
 import { DeleteDiaryEntryButton } from "./diary-entries/delete-diary-entry-button";
 import { NotesSearchbar } from "./notes/notes-searchbar";
 import { ThemeSwitcher } from "./theme-switcher";
+import { useNotesContext } from "./notes/notes-context";
 
 // import { NotesSidebar } from "./notes/notes-sidebar";
 // Routes // This probably should be an enum
@@ -39,7 +38,7 @@ export function Navbar() {
 	const pathname = usePathname();
 	const id = useParamsId();
 	console.log("paramsId", id);
-	const [notes, setNotes] = useState<INote[]>([]);
+	const { notes } = useNotesContext();
 
 	const getCurrentRoute = () => {
 		if (pathname.includes(editNoteRoute)) {
@@ -72,16 +71,6 @@ export function Navbar() {
 		}
 		return null;
 	};
-
-	useEffect(() => {
-		if (currentRoute === notesRoute) {
-			const fetchNotes = async () => {
-				const newNotes = await getAllNotes();
-				setNotes(newNotes);
-			};
-			fetchNotes();
-		}
-	}, [currentRoute, id]);
 
 	const getNavbarItems = () => {
 		if (currentRoute === editNoteRoute && id != null) {

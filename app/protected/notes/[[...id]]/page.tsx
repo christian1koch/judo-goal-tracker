@@ -13,7 +13,6 @@ export default async function NotesPage({
 }) {
 	const id = (await params).id;
 	const notes = await getAllNotes();
-
 	const noNotes = !notes || notes.length === 0;
 	const generalPage = id == null;
 

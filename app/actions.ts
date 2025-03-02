@@ -8,6 +8,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { IDiaryAnswer, IDiaryEntry, IDiaryEntryWithInfo } from "@/types";
 import { getURL } from "@/lib/utils";
+import { cache } from "react";
 
 export const signUpAction = async (formData: FormData) => {
 	const email = formData.get("email")?.toString();
@@ -410,7 +411,7 @@ export const getDiaryEntryWithRelations = async () => {
 	return typedDiaryEntries;
 };
 
-export const getAllNotes = async () => {
+export const getAllNotes = cache(async () => {
 	const supabase = await createClient();
 	const { data: note, error } = await supabase.from("notes").select();
 	if (error) {
@@ -418,7 +419,7 @@ export const getAllNotes = async () => {
 	}
 
 	return note;
-};
+});
 
 export const getNoteById = async (id: number) => {
 	const supabase = await createClient();

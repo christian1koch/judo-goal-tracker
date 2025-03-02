@@ -22,7 +22,6 @@ export function NotesTextEditor({ note }: NoteTextEditorProps) {
 			console.log(e);
 		}
 	};
-
 	const updateContentDebounced = useDebouncedCallback(
 		async (value: string) => {
 			await updateNoteContent(note.id, value);
@@ -95,9 +94,11 @@ export function NotesTextEditor({ note }: NoteTextEditorProps) {
 			</div>
 			<TextEditor
 				content={note.text || ""}
-				onUpdate={({ editor }) =>
-					updateContentDebounced(editor.getHTML())
-				}
+				onUpdate={({ editor }) => {
+					if (note.text !== editor.getHTML()) {
+						updateContentDebounced(editor.getHTML());
+					}
+				}}
 				suggestionsList={notesToSuggestionOption()}
 				editable={isEditMode}
 			/>
