@@ -155,7 +155,7 @@ const extensions = [
 	}),
 	Underline,
 	Link.configure({
-		autolink: true,
+		autolink: false,
 	}),
 	Image.configure({
 		inline: true,
