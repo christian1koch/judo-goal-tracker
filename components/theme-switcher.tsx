@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,11 +10,13 @@ import {
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/responsiveIconButton";
+import { useDisclosure } from "@heroui/react";
 
 const ThemeSwitcher = () => {
 	const [mounted, setMounted] = useState(false);
 	const { theme, setTheme } = useTheme();
-
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	// useEffect only runs on the client, so now we can safely show the UI
 	useEffect(() => {
 		setMounted(true);
@@ -28,9 +29,9 @@ const ThemeSwitcher = () => {
 	const ICON_SIZE = 16;
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu onOpenChange={onOpenChange} open={isOpen}>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" size={"sm"}>
+				<Button onPress={onOpen} variant="light" size={"sm"} isIconOnly>
 					{theme === "light" ? (
 						<Sun
 							key="light"

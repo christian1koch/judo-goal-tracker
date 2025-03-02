@@ -18,10 +18,11 @@ export function NotesSearchbar() {
 	return (
 		<>
 			<Button
-				startContent={<IconSearch size={18} />}
+				startContent={<IconSearch size={16} />}
 				variant="light"
 				onPress={onOpen}
 				shouldResponsiveShowIconOnly
+				size="sm"
 			>
 				Search Note
 			</Button>

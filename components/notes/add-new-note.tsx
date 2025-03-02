@@ -27,13 +27,14 @@ export function AddNewNotesButton({
 	};
 	return (
 		<Button
-			startContent={<IconCirclePlusFilled />}
+			startContent={<IconCirclePlusFilled size={16} />}
 			className={className}
 			isLoading={isLoading}
 			isDisabled={isLoading}
 			onPress={handleOnClick}
 			variant="ghost"
 			shouldResponsiveShowIconOnly={shouldShowResponsiveIcon}
+			size="sm"
 		>
 			New note
 		</Button>

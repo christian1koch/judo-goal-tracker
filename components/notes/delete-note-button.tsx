@@ -21,13 +21,14 @@ export function DeleteNoteButton({ id }: { id: number }) {
 	};
 	return (
 		<Button
-			startContent={<IconSquareRoundedXFilled />}
+			startContent={<IconSquareRoundedXFilled size={16} />}
 			variant="light"
 			color="danger"
 			isLoading={isLoading}
 			isDisabled={isLoading}
 			onPress={handleOnClick}
 			shouldResponsiveShowIconOnly
+			size="sm"
 		>
 			Delete
 		</Button>
