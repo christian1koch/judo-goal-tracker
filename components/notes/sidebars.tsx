@@ -69,6 +69,7 @@ export function SidebarItem({ isSelected, href, title }: SidebarItem) {
 			radius="none"
 			className="flex-shrink-0"
 			href={href}
+			prefetch
 		>
 			{title}
 		</Button>
